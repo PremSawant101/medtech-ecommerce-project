@@ -46,6 +46,10 @@ export default function CollectionsPage() {
           scrub: true,
         });
       });
+
+      return () => {
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      };
     },
     { scope: containerRef }
   );
@@ -127,17 +131,17 @@ export default function CollectionsPage() {
 
         <div className="flex gap-20 mt-10">
           {hairOil.map((product) => {
-  console.log("Product ID:", product._id);
-  return (
-     <Link key={product._id} href={`/collections/${product._id}`}>
-              <ProductCard
-                image={product.image || "/images/oil/product1.png"}
-                title={product.name}
-              />
-            </Link>
-  );
-})}
-           
+            console.log("Product ID:", product._id);
+            return (
+              <Link key={product._id} href={`/collections/${product._id}`}>
+                <ProductCard
+                  image={product.image || "/images/oil/product1.png"}
+                  title={product.name}
+                />
+              </Link>
+            );
+          })}
+
         </div>
       </section>
 

@@ -41,46 +41,34 @@ export async function PUT(req, context) {
     try {
         await connectDB();
 
-        const session = await getServerSession(authOptions);
+        const { id } = await context.params;
 
-        if (!session || session.user.role !== "admin") {
-            return Response.json(
-                { message: "Unauthorized" },
-                { status: 403 }
-            );
-        }
+        const body = await req.json();
 
-        const params = await context.params;
-        const id = params.id;
-
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return Response.json(
-                { message: "Invalid ID format" },
-                { status: 400 }
-            );
-        }
-
-        const { name, description, price, image } = await req.json();
+        console.log("Incoming stock:", body.stock);
 
         const updatedProduct = await Product.findByIdAndUpdate(
             id,
             {
-                name,
-                description,
-                price,
-                image,
+                name: body.name,
+                description: body.description,
+                price: Number(body.price),
+                image: body.image,
+                category: body.category,
+                stock: Number(body.stock), // 🔥 THIS LINE IS IMPORTANT
             },
-            { returnDocument: "after" }
+            { new: true }
         );
 
         return Response.json({
             message: "Product updated successfully",
             product: updatedProduct,
         });
+
     } catch (error) {
-        console.log("PUT ERROR:", error);
+        console.log(error);
         return Response.json(
-            { message: error.message },
+            { message: "Server error" },
             { status: 500 }
         );
     }

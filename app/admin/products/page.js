@@ -13,9 +13,11 @@ export default function ProductsPage() {
     const [image, setImage] = useState("");
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
-    const [message, setMessage] = useState("");
+    const [stock, setStock] = useState("");
     const [editId, setEditId] = useState(null);
+    const [message, setMessage] = useState("");
 
+    // Load Products
     const loadProducts = async () => {
         const res = await fetch("/api/products");
         const data = await res.json();
@@ -26,19 +28,18 @@ export default function ProductsPage() {
         loadProducts();
     }, []);
 
+    // Add Product
     const addProduct = async () => {
         const res = await fetch("/api/products", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 email: session?.user?.email,
                 name,
                 category,
                 description,
                 price: Number(price),
-                stock: 100,
+                stock: Number(stock),
                 prescriptionRequired: false,
                 image,
             }),
@@ -46,17 +47,13 @@ export default function ProductsPage() {
 
         const data = await res.json();
         setMessage(data.message);
-
-        setName("");
-        setPrice("");
-        setImage("");
-        setDescription("");
-        setCategory("");
+        resetForm();
         loadProducts();
     };
 
+    // Delete Product
     const handleDelete = async (id) => {
-        if (!confirm("Are you sure you want to delete this product?")) return;
+        if (!confirm("Are you sure?")) return;
 
         await fetch(`/api/products/${id}`, {
             method: "DELETE",
@@ -64,34 +61,48 @@ export default function ProductsPage() {
 
         loadProducts();
     };
+
+    // Start Edit
     const startEdit = (product) => {
         setEditId(product._id);
         setName(product.name);
         setPrice(product.price);
         setImage(product.image);
+        setCategory(product.category);
         setDescription(product.description);
+        setStock(product.stock);
     };
+
+    // Update Product
     const updateProduct = async () => {
         await fetch(`/api/products/${editId}`, {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 name,
                 description,
                 price: Number(price),
                 image,
+                category,
+                stock: Number(stock),
             }),
         });
 
+        setMessage("Product updated successfully");
+        resetForm();
+        loadProducts();
+    };
+
+    const resetForm = () => {
         setEditId(null);
         setName("");
         setPrice("");
         setImage("");
+        setCategory("");
         setDescription("");
-        loadProducts();
+        setStock("");
     };
+
     return (
         <div className="min-h-screen bg-[#100C08] text-[#FFFAF0] p-10">
 
@@ -99,10 +110,11 @@ export default function ProductsPage() {
                 Product Management
             </h1>
 
+            {/* FORM */}
             <div className="bg-[#FFFAF0] text-black rounded-2xl shadow-xl p-6 max-w-xl mb-10">
 
                 <h2 className="text-xl font-semibold mb-4 text-[#6B8E23]">
-                    Add Product
+                    {editId ? "Edit Product" : "Add Product"}
                 </h2>
 
                 <input
@@ -126,6 +138,15 @@ export default function ProductsPage() {
                     placeholder="Image URL"
                     className="w-full border p-3 rounded-lg mb-3"
                 />
+
+                <input
+                    type="number"
+                    value={stock}
+                    onChange={(e) => setStock(e.target.value)}
+                    placeholder="Stock Quantity"
+                    className="w-full border p-3 rounded-lg mb-3"
+                />
+
                 <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
@@ -136,6 +157,7 @@ export default function ProductsPage() {
                     <option value="Hair Tablet">Hair Tablet</option>
                     <option value="Hair Lepa">Hair Lepa</option>
                 </select>
+
                 <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -145,16 +167,26 @@ export default function ProductsPage() {
 
                 <button
                     onClick={editId ? updateProduct : addProduct}
-                    className="bg-[#6B8E23] text-white px-6 py-2 rounded-lg hover:bg-[#556B2F] transition"
+                    className="bg-[#6B8E23] text-white px-6 py-2 rounded-lg"
                 >
                     {editId ? "Update Product" : "Add Product"}
                 </button>
+
+                {editId && (
+                    <button
+                        onClick={resetForm}
+                        className="ml-3 bg-gray-500 text-white px-6 py-2 rounded-lg"
+                    >
+                        Cancel
+                    </button>
+                )}
 
                 {message && (
                     <p className="mt-3 text-green-600">{message}</p>
                 )}
             </div>
 
+            {/* PRODUCT LIST */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((p) => (
                     <div
@@ -170,25 +202,26 @@ export default function ProductsPage() {
                         <h3 className="font-bold text-lg">{p.name}</h3>
                         <p className="text-gray-600">{p.description}</p>
 
-                        <div className="mt-3 flex justify-between items-center">
-                            <span className="font-semibold text-[#6B8E23]">
+                        <div className="mt-3 flex justify-between">
+                            <span className="text-[#6B8E23] font-semibold">
                                 ₹{p.price}
                             </span>
-                            <span className="text-sm">
+                            <span className={`font-semibold ${p.stock === 0 ? "text-red-600" : ""}`}>
                                 Stock: {p.stock}
                             </span>
                         </div>
+
                         <div className="mt-4 flex gap-3">
                             <button
                                 onClick={() => handleDelete(p._id)}
-                                className="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 transition"
+                                className="bg-red-500 text-white px-3 py-1 rounded-md"
                             >
                                 Delete
                             </button>
 
                             <button
                                 onClick={() => startEdit(p)}
-                                className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition"
+                                className="bg-blue-500 text-white px-3 py-1 rounded-md"
                             >
                                 Edit
                             </button>

@@ -62,6 +62,9 @@ export default function AdminLayout({ children }) {
                         <Link href="/admin/coupons" className="hover:text-[#6B8E23] transition">
                             Coupons
                         </Link>
+                        <Link href="/admin/users" className="hover:text-[#6B8E23] transition">
+                            Users
+                        </Link>
                     </nav>
                 </div>
 

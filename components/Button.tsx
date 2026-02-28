@@ -3,20 +3,27 @@ import Image from "next/image";
 type ButtonProps = {
   bgColor: string;
   title: string;
-  onClick?: () => void;   // 👈 add this
+  onClick?: () => void;
+  disabled?: boolean;   // ✅ add this
 };
 
-const Button = ({ bgColor, title, onClick }: ButtonProps) => {
+const Button = ({ bgColor, title, onClick, disabled }: ButtonProps) => {
+
   return (
     <button
-      onClick={onClick}   // 👈 attach here
-      className={`text-xl flex text-white items-center cursor-pointer ${
-        bgColor === "black"
-          ? "bg-black"
-          : "bg-[#4E482E]"
-      } px-8 py-4 rounded-full hover:scale-105 transition`}
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
+      className={`text-xl flex items-center text-white px-8 py-4 rounded-full transition
+        ${disabled
+          ? "bg-gray-400 cursor-not-allowed"
+          : bgColor === "black"
+            ? "bg-black hover:scale-105"
+            : "bg-[#4E482E] hover:scale-105"
+        }
+      `}
     >
       {title}
+
       <Image
         src="/images/navbar/arrow-up-right.png"
         alt="Arrow"

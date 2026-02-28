@@ -83,7 +83,7 @@ export default function LoginPage() {
               password,
               redirect: false,
             });
-
+            console.log("clickeed")
             if (result?.error) {
               alert("Invalid credentials");
             }
@@ -116,7 +116,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="text-center mt-8 text-black font-medium underline cursor-pointer hover:opacity-70">
+        <div onClick={() => router.push("/signup")} className="text-center mt-8 text-black font-medium underline cursor-pointer hover:opacity-70">
           SIGN UP
         </div>
       </div>
