@@ -50,7 +50,6 @@ export async function PUT(req, context) {
             );
         }
 
-        // 👇 IMPORTANT FIX
         const params = await context.params;
         const id = params.id;
 

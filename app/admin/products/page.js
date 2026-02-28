@@ -11,6 +11,7 @@ export default function ProductsPage() {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [image, setImage] = useState("");
+    const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
     const [message, setMessage] = useState("");
     const [editId, setEditId] = useState(null);
@@ -34,7 +35,7 @@ export default function ProductsPage() {
             body: JSON.stringify({
                 email: session?.user?.email,
                 name,
-                category: "Medicine",
+                category,
                 description,
                 price: Number(price),
                 stock: 100,
@@ -50,7 +51,7 @@ export default function ProductsPage() {
         setPrice("");
         setImage("");
         setDescription("");
-
+        setCategory("");
         loadProducts();
     };
 
@@ -125,7 +126,16 @@ export default function ProductsPage() {
                     placeholder="Image URL"
                     className="w-full border p-3 rounded-lg mb-3"
                 />
-
+                <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="w-full border p-3 rounded-lg mb-3"
+                >
+                    <option value="">Select Category</option>
+                    <option value="Hair Oil">Hair Oil</option>
+                    <option value="Hair Tablet">Hair Tablet</option>
+                    <option value="Hair Lepa">Hair Lepa</option>
+                </select>
                 <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
