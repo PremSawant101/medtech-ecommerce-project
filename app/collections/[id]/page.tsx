@@ -167,11 +167,10 @@ export default function ProductPage() {
                                 if (product.stock === 0) return;
 
                                 addToCart({
-                                    _id: product._id,
+                                    id: product._id,
                                     name: product.name,
                                     price: product.price,
                                     image: product.image,
-                                    quantity: 1,
                                 });
                             }}
                         />
