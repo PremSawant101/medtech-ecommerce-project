@@ -121,7 +121,7 @@ export default function CollectionsPage() {
       </div>
 
       {/* ================= HAIR OIL ================= */}
-      <section className="collection-section min-h-screen flex flex-col items-center justify-center">
+      <section className="collection-section z-999 min-h-screen flex flex-col items-center justify-center">
         <h1
           className="text-[120px] font-extrabold text-transparent"
           style={{ WebkitTextStroke: "2px #A6B11E" }}
@@ -129,7 +129,7 @@ export default function CollectionsPage() {
           HAIR OIL
         </h1>
 
-        <div className="flex gap-20 mt-10">
+        <div className="flex gap-8 mt-1">
           {hairOil.map((product) => {
             console.log("Product ID:", product._id);
             return (
@@ -154,7 +154,7 @@ export default function CollectionsPage() {
           HAIR TABLETS
         </h1>
 
-        <div className="flex gap-20 mt-20">
+        <div className="flex gap-8 mt-1">
           {hairTablets.map((product) => (
             <Link key={product._id} href={`/collections/${product._id}`}>
               <ProductCard
@@ -175,7 +175,7 @@ export default function CollectionsPage() {
           HAIR LEPA
         </h1>
 
-        <div className="mt-20">
+        <div className="mt-1">
           {hairLepa.map((product) => (
             <Link key={product._id} href={`/collections/${product._id}`}>
               <ProductCard
@@ -199,7 +199,7 @@ function ProductCard({ image, title }: { image: string; title: string }) {
           alt={title}
           width={1000}
           height={1000}
-          className="object-cover w-185 h-110"
+          className="object-cover w-145 h-90"
         />
       </div>
 

@@ -39,12 +39,9 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav
-      className={`${dmSans.className} fixed top-0 w-full h-28 z-50 `}
-    >
+    <nav className={`${dmSans.className} fixed top-0 w-full h-28 z-50 `}>
       <div className="max-w-7xl mx-auto flex items-center justify-between px-10 py-4">
-
-                <Link href="/">
+        <Link href="/">
           <h1
             className={`${playfair.className} text-3xl tracking-widest font-bold text-[#4E482E] hover:scale-105 transition`}
           >
@@ -65,7 +62,6 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-6">
-
           <div className="relative" ref={dropdownRef}>
             {session ? (
               <>
