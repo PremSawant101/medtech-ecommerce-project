@@ -51,142 +51,142 @@ export default function CollectionsPage() {
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       };
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   // ✅ Category filters
   const hairOil = products.filter((p) =>
-    p.category?.toLowerCase().includes("oil")
+    p.category?.toLowerCase().includes("oil"),
   );
 
   const hairTablets = products.filter((p) =>
-    p.category?.toLowerCase().includes("tablet")
+    p.category?.toLowerCase().includes("tablet"),
   );
 
   const hairLepa = products.filter((p) =>
-    p.category?.toLowerCase().includes("lepa")
+    p.category?.toLowerCase().includes("lepa"),
   );
 
   return (
-    <main
-      ref={containerRef}
-      className={`relative bg-[#F4F3EE] ${lexend.className}`}
-    >
+    <div className="">
       <Navbar />
+      <main
+        ref={containerRef}
+        className={`relative pointer-events-none bg-[#F4F3EE] ${lexend.className}`}
+      >
+        {/* FIXED BACKGROUND */}
+        <div className="fixed inset-0 z-1 overflow-hidden ">
+          <Image
+            src="/images/amla.png"
+            alt="Amla"
+            width={250}
+            height={250}
+            className="absolute -top-40 -left-20 blur-sm -rotate-45"
+          />
+          <Image
+            src="/images/frontAmla.png"
+            alt="Amla"
+            width={200}
+            height={200}
+            className="absolute -top-30 right-1/5 rotate-140"
+          />
+          <Image
+            src="/images/leaves/leaf1.png"
+            alt="Leaf"
+            width={250}
+            height={250}
+            className="absolute -bottom-20 -left-20 rotate-45"
+          />
+          <Image
+            src="/images/frontAmla.png"
+            alt="Amla"
+            width={250}
+            height={250}
+            className="absolute -bottom-50 left-1/6 rotate-140 blur-sm"
+          />
+          <Image
+            src="/images/amla.png"
+            alt="Amla"
+            width={250}
+            height={250}
+            className="absolute bottom-10 right-10 rotate-45"
+          />
+          <Image
+            src="/images/leaves/leaf1.png"
+            alt="Leaf"
+            width={250}
+            height={250}
+            className="absolute bottom-2/4 -right-20 -rotate-45 blur-xs"
+          />
+        </div>
 
-      {/* FIXED BACKGROUND */}
-      <div className="fixed inset-0 z-1 overflow-hidden pointer-events-none">
-        <Image
-          src="/images/amla.png"
-          alt="Amla"
-          width={250}
-          height={250}
-          className="absolute -top-40 -left-20 blur-sm -rotate-45"
-        />
-        <Image
-          src="/images/frontAmla.png"
-          alt="Amla"
-          width={200}
-          height={200}
-          className="absolute -top-30 right-1/5 rotate-140"
-        />
-        <Image
-          src="/images/leaves/leaf1.png"
-          alt="Leaf"
-          width={250}
-          height={250}
-          className="absolute -bottom-20 -left-20 rotate-45"
-        />
-        <Image
-          src="/images/frontAmla.png"
-          alt="Amla"
-          width={250}
-          height={250}
-          className="absolute -bottom-50 left-1/6 rotate-140 blur-sm"
-        />
-        <Image
-          src="/images/amla.png"
-          alt="Amla"
-          width={250}
-          height={250}
-          className="absolute bottom-10 right-10 rotate-45"
-        />
-        <Image
-          src="/images/leaves/leaf1.png"
-          alt="Leaf"
-          width={250}
-          height={250}
-          className="absolute bottom-2/4 -right-20 -rotate-45 blur-xs"
-        />
-      </div>
+        {/* ================= HAIR OIL ================= */}
+        <section className="collection-section z-999 min-h-screen flex flex-col items-center justify-center">
+          <h1
+            className="text-[120px] font-extrabold text-transparent"
+            style={{ WebkitTextStroke: "2px #A6B11E" }}
+          >
+            HAIR OIL
+          </h1>
 
-      {/* ================= HAIR OIL ================= */}
-      <section className="collection-section z-999 min-h-screen flex flex-col items-center justify-center">
-        <h1
-          className="text-[120px] font-extrabold text-transparent"
-          style={{ WebkitTextStroke: "2px #A6B11E" }}
-        >
-          HAIR OIL
-        </h1>
+          <div className="flex gap-8 mt-1">
+            {hairOil.map((product) => {
+              console.log("Product ID:", product._id);
+              return (
+                <Link key={product._id} href={`/collections/${product._id}`}>
+                  <ProductCard
+                    image={product.image || "/images/oil/product1.png"}
+                    title={product.name}
+                  />
+                </Link>
+              );
+            })}
+          </div>
+        </section>
 
-        <div className="flex gap-8 mt-1">
-          {hairOil.map((product) => {
-            console.log("Product ID:", product._id);
-            return (
+        {/* ================= HAIR TABLETS ================= */}
+        <section className="collection-section min-h-screen flex flex-col items-center justify-center">
+          <h1
+            className="text-[120px] font-extrabold text-transparent"
+            style={{ WebkitTextStroke: "2px #A6B11E" }}
+          >
+            HAIR TABLETS
+          </h1>
+
+          <div className="flex gap-8 mt-1">
+            {hairTablets.map((product) => (
               <Link key={product._id} href={`/collections/${product._id}`}>
                 <ProductCard
-                  image={product.image || "/images/oil/product1.png"}
+                  image={product.image || "/images/tablets/product1.png"}
                   title={product.name}
                 />
               </Link>
-            );
-          })}
+            ))}
+          </div>
+        </section>
 
-        </div>
-      </section>
+        {/* ================= HAIR LEPA ================= */}
+        <section className="collection-section min-h-screen flex flex-col items-center justify-center">
+          <h1
+            className="text-[120px] font-extrabold text-transparent"
+            style={{ WebkitTextStroke: "2px #A6B11E" }}
+          >
+            HAIR LEPA
+          </h1>
 
-      {/* ================= HAIR TABLETS ================= */}
-      <section className="collection-section min-h-screen flex flex-col items-center justify-center">
-        <h1
-          className="text-[120px] font-extrabold text-transparent"
-          style={{ WebkitTextStroke: "2px #A6B11E" }}
-        >
-          HAIR TABLETS
-        </h1>
-
-        <div className="flex gap-8 mt-1">
-          {hairTablets.map((product) => (
-            <Link key={product._id} href={`/collections/${product._id}`}>
-              <ProductCard
-                image={product.image || "/images/tablets/product1.png"}
-                title={product.name}
-              />
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ================= HAIR LEPA ================= */}
-      <section className="collection-section min-h-screen flex flex-col items-center justify-center">
-        <h1
-          className="text-[120px] font-extrabold text-transparent"
-          style={{ WebkitTextStroke: "2px #A6B11E" }}
-        >
-          HAIR LEPA
-        </h1>
-
-        <div className="mt-1">
-          {hairLepa.map((product) => (
-            <Link key={product._id} href={`/collections/${product._id}`}>
-              <ProductCard
-                image={product.image || "/images/hairLepa/product1.png"}
-                title={product.name}
-              />
-            </Link>
-          ))}
-        </div>
-      </section>
-    </main>
+          <div className="mt-1">
+            {hairLepa.map((product) => (
+              <Link key={product._id} href={`/collections/${product._id}`}>
+                <ProductCard
+                  image={product.image || "/images/hairLepa/product1.png"}
+                  title={product.name}
+                />
+              </Link>
+            ))}
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
 

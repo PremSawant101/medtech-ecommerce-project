@@ -39,24 +39,24 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`${dmSans.className} fixed top-0 w-full h-28 z-50 `}>
+    <nav className={`${dmSans.className} fixed top-0 w-full h-28 z-999`}>
       <div className="max-w-7xl mx-auto flex items-center justify-between px-10 py-4">
         <Link href="/">
           <h1
-            className={`${playfair.className} text-3xl tracking-widest font-bold text-[#4E482E] hover:scale-105 transition`}
+            className={`${playfair.className} text-3xl cursor-pointer tracking-widest font-bold text-[#4E482E] hover:scale-105 transition`}
           >
             MED<span className="text-[#6B8E23]">TECH</span>
           </h1>
         </Link>
 
         <div className="flex gap-10 text-2xl font-medium text-[#4E482E]">
-          <Link href="/collections" className="hover:text-[#6B8E23] transition">
+          <Link href="/collections" className="hover:text-[#6B8E23] cursor-pointer transition">
             Collections
           </Link>
-          <Link href="/#ourStory" className="hover:text-[#6B8E23] transition">
+          <Link href="/#ourStory" className="hover:text-[#6B8E23] cursor-pointer transition">
             Our Story
           </Link>
-          <Link href="/contact" className="hover:text-[#6B8E23] transition">
+          <Link href="/contact" className="hover:text-[#6B8E23] cursor-pointer transition">
             Contact
           </Link>
         </div>
@@ -90,7 +90,7 @@ const Navbar = () => {
                 )}
               </>
             ) : (
-              <Link href="/login">
+              <Link href="/login" className="cursor-pointer">
                 <div className="p-3 bg-white rounded-full shadow hover:scale-105 transition">
                   <FaUser className="h-5 w-5 text-[#4E482E]" />
                 </div>
@@ -98,7 +98,7 @@ const Navbar = () => {
             )}
           </div>
 
-          <Link href="/cart" className="relative">
+          <Link href="/cart" className="relative cursor-pointer">
             <div className="p-3 bg-white rounded-full shadow hover:scale-105 transition">
               <FaShoppingCart className="h-5 w-5 text-[#4E482E]" />
               {totalItems > 0 && (
@@ -112,7 +112,7 @@ const Navbar = () => {
           {session?.user?.role === "admin" && (
             <Link
               href="/admin"
-              className="px-5 py-2 rounded-full bg-gradient-to-r from-[#4E482E] to-[#6D6A5F] text-white text-sm font-semibold shadow hover:scale-105 transition"
+              className="px-5 py-2 cursor-pointer rounded-full bg-gradient-to-r from-[#4E482E] to-[#6D6A5F] text-white text-sm font-semibold shadow hover:scale-105 transition"
             >
               Admin Panel
             </Link>

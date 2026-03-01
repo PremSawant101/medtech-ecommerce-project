@@ -114,7 +114,7 @@ export default function Home() {
 
       <section
         ref={fadeBg}
-        className="h-screen bg-[url(/images/amlaBg.png)]  overflow-hidden bg-center bg-no-repeat bg-cover text-white flex items-center justify-center"
+        className="h-screen bg-[url(/images/amlaBg.png)] pointer-events-none overflow-hidden bg-center bg-no-repeat bg-cover text-white flex items-center justify-center"
       >
         <div className="h-screen w-screen bg-black/20 "></div>
         <h1 className="text-pretty text-[160px] leading-none font-extrabold w-1/6 absolute left-80 ">
