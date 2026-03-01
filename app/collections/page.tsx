@@ -121,7 +121,7 @@ export default function CollectionsPage() {
         </div>
 
         {/* ================= HAIR OIL ================= */}
-        <section className="collection-section z-999 min-h-screen flex flex-col items-center justify-center">
+        <section className="collection-section pointer-events-none z-999 min-h-screen flex flex-col items-center justify-center">
           <h1
             className="text-[120px] font-extrabold text-transparent"
             style={{ WebkitTextStroke: "2px #A6B11E" }}
