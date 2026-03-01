@@ -60,7 +60,7 @@ export default function BottleScene() {
         alt="Bottle"
         height={1000}
         width={1000}
-        className=" md:w-150"
+        className=" md:w-100"
       />
     </div>
   );

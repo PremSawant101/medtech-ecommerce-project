@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { DM_Sans } from "next/font/google";
-import Image from "next/image";
+import { DM_Sans, Playfair_Display } from "next/font/google";
 import Link from "next/link";
-import { FaShoppingCart } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
 import { useSession, signOut } from "next-auth/react";
 
-const dmSans = DM_Sans({
+const dmSans = DM_Sans({ subsets: ["latin"] });
+
+const playfair = Playfair_Display({
   subsets: ["latin"],
+  weight: ["600", "700"],
 });
 
 const Navbar = () => {
@@ -19,9 +20,8 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    console.log("Session Data:", session);
-  }, [session]);
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -37,122 +37,93 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  const totalItems = cart.reduce(
-    (sum, item) => sum + item.quantity,
-    0
-  );
 
   return (
-    <div
-      className={`${dmSans.className} z-999 bg-transparent text-black fixed h-40 text-2xl font-600 flex items-center right-1/5 w-6xl font-semibold`}
+    <nav
+      className={`${dmSans.className} fixed top-0 w-full z-50 backdrop-blur-xs bg-white/80 shadow-md`}
     >
-      <div className="flex items-center justify-around w-full">
-        {/* USER ICON */}
-        <div className="relative" ref={dropdownRef}>
-          {session ? (
-            <>
-              {/* User Badge */}
-              <div
-                onClick={() => setOpen(!open)}
-                className="flex items-center gap-3 px-4 py-2 rounded-full
-                   bg-white shadow-md border border-gray-200
-                   hover:shadow-lg transition-all duration-200
-                   cursor-pointer"
-              >
-                {/* Avatar */}
-                <div className="w-8 h-8 rounded-full bg-[#4E482E] text-white flex items-center justify-center text-sm font-semibold">
-                  {session.user?.name?.charAt(0).toUpperCase()}
-                </div>
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-10 py-4">
 
-                {/* Name */}
-                <span className="text-sm font-semibold text-[#4E482E]">
-                  {session.user?.name}
-                </span>
-
-                {/* Arrow */}
-                <svg
-                  className={`w-4 h-4 text-[#4E482E] transition-transform duration-200 ${open ? "rotate-180" : ""
-                    }`}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </div>
-
-              {/* Dropdown */}
-              {open && (
-                <div className="absolute mt-3 w-40 bg-white rounded-xl shadow-lg border border-gray-200 py-2 right-0 z-50">
-                  <button
-                    onClick={() => signOut({ callbackUrl: "/" })}
-                    className="w-full text-left px-4 py-2 text-sm text-[#4E482E] hover:bg-gray-100 transition"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </>
-          ) : (
-            <Link href="/login">
-              <div className="p-4 bg-white rounded-full shadow-md hover:scale-105 transition">
-                <FaUser className="h-6 w-6 text-[#4E482E]" />
-              </div>
-            </Link>
-          )}
-        </div>
-
-        {/* LINKS */}
-        <div className="links flex gap-14">
-          <Link href="/collections" className="px-4">
+        <div className="flex gap-10 text-[20px] font-medium text-[#4E482E]">
+          <Link href="/collections" className="hover:text-[#6B8E23] transition">
             Collections
           </Link>
-          <Link href="/#ourStory" className="px-4">
+          <Link href="/#ourStory" className="hover:text-[#6B8E23] transition">
             Our Story
           </Link>
-          <Link href="/" className="px-4">
-            Education
-          </Link>
-          <Link href="/contact" className="px-4">
+          <Link href="/contact" className="hover:text-[#6B8E23] transition">
             Contact
           </Link>
         </div>
 
-        {/* CART ICON */}
-        <div>
-          <Link href="/cart" className="cursor-pointer relative">
-            <div className="p-4 bg-white rounded-full relative">
-              <FaShoppingCart className="h-6 w-6" />
+        <Link href="/">
+          <h1
+            className={`${playfair.className} text-3xl tracking-widest font-bold text-[#4E482E] hover:scale-105 transition`}
+          >
+            MED<span className="text-[#6B8E23]">TECH</span>
+          </h1>
+        </Link>
 
-              {/* Badge */}
+        <div className="flex items-center gap-6">
+
+          <div className="relative" ref={dropdownRef}>
+            {session ? (
+              <>
+                <div
+                  onClick={() => setOpen(!open)}
+                  className="flex items-center gap-3 px-4 py-2 rounded-full bg-white shadow border hover:shadow-lg cursor-pointer transition"
+                >
+                  <div className="w-8 h-8 rounded-full bg-[#4E482E] text-white flex items-center justify-center text-sm font-semibold">
+                    {session.user?.name?.charAt(0).toUpperCase()}
+                  </div>
+
+                  <span className="text-sm font-semibold text-[#4E482E]">
+                    {session.user?.name}
+                  </span>
+                </div>
+
+                {open && (
+                  <div className="absolute right-0 mt-3 w-40 bg-white rounded-xl shadow-lg border py-2">
+                    <button
+                      onClick={() => signOut({ callbackUrl: "/" })}
+                      className="w-full text-left px-4 py-2 text-md text-[#6B8E23] hover:bg-gray-100 transition"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <Link href="/login">
+                <div className="p-3 bg-white rounded-full shadow hover:scale-105 transition">
+                  <FaUser className="h-5 w-5 text-[#4E482E]" />
+                </div>
+              </Link>
+            )}
+          </div>
+
+          <Link href="/cart" className="relative">
+            <div className="p-3 bg-white rounded-full shadow hover:scale-105 transition">
+              <FaShoppingCart className="h-5 w-5 text-[#4E482E]" />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#4E482E] text-white text-sm px-[8px] py-[2px] rounded-full">
+                <span className="absolute -top-1 -right-1 bg-[#6B8E23] text-white text-xs px-2 py-[2px] rounded-full">
                   {totalItems}
                 </span>
               )}
             </div>
           </Link>
-        </div>
-        {session?.user?.role === "admin" && (
-          <Link
-            href="/admin"
-            className="px-5 py-2 rounded-full
-               bg-gradient-to-r from-[#4E482E] to-[#6D6A5F]
-               text-white text-sm font-semibold
-               shadow-md hover:shadow-lg hover:scale-105
-               transition-all duration-200"
-          >
-            Admin Panel
-          </Link>
-        )}
-      </div>
 
-    </div>
+          {session?.user?.role === "admin" && (
+            <Link
+              href="/admin"
+              className="px-5 py-2 rounded-full bg-gradient-to-r from-[#4E482E] to-[#6D6A5F] text-white text-sm font-semibold shadow hover:scale-105 transition"
+            >
+              Admin Panel
+            </Link>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };
 

@@ -117,7 +117,7 @@ export default function Home() {
         className="h-screen bg-[url(/images/amlaBg.png)]  overflow-hidden bg-center bg-no-repeat bg-cover text-white flex items-center justify-center"
       >
         <div className="h-screen w-screen bg-black/20 "></div>
-        <h1 className="text-pretty text-[160px] leading-tight font-extrabold w-1/6 absolute left-80 ">
+        <h1 className="text-pretty text-[160px] leading-none font-extrabold w-1/6 absolute left-80 ">
           Nature's Answer To Hairfall
         </h1>
       </section>
@@ -186,7 +186,7 @@ export default function Home() {
       </section>
 
       <section className="h-screen bg-linear-to-l  from-[#FFFEFE26] to-[#DFE2D2] text-[#4E482E] font-lexend flex items-center justify-center">
-        <div id="ourStory"  className="max-w-7xl p-14 flex justify-between items-center gap-75">
+        <div id="ourStory" className="max-w-7xl p-14 flex justify-between items-center gap-75">
           <Image
             src="/images/p1.png"
             alt="Bottle"
