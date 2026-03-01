@@ -199,7 +199,7 @@ function ProductCard({ image, title }: { image: string; title: string }) {
           alt={title}
           width={1000}
           height={1000}
-          className="object-cover w-145 h-90"
+          className="object-contain w-125 h-70"
         />
       </div>
 
