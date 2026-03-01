@@ -40,11 +40,19 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`${dmSans.className} fixed top-0 w-full z-50 backdrop-blur-xs bg-white/80 shadow-md`}
+      className={`${dmSans.className} fixed top-0 w-full h-28 z-50 `}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-10 py-4">
 
-        <div className="flex gap-10 text-[20px] font-medium text-[#4E482E]">
+                <Link href="/">
+          <h1
+            className={`${playfair.className} text-3xl tracking-widest font-bold text-[#4E482E] hover:scale-105 transition`}
+          >
+            MED<span className="text-[#6B8E23]">TECH</span>
+          </h1>
+        </Link>
+
+        <div className="flex gap-10 text-2xl font-medium text-[#4E482E]">
           <Link href="/collections" className="hover:text-[#6B8E23] transition">
             Collections
           </Link>
@@ -55,14 +63,6 @@ const Navbar = () => {
             Contact
           </Link>
         </div>
-
-        <Link href="/">
-          <h1
-            className={`${playfair.className} text-3xl tracking-widest font-bold text-[#4E482E] hover:scale-105 transition`}
-          >
-            MED<span className="text-[#6B8E23]">TECH</span>
-          </h1>
-        </Link>
 
         <div className="flex items-center gap-6">
 
