@@ -28,7 +28,7 @@ export default function Footer() {
           {/* COLUMN 1 */}
           <div>
             <h3 className="text-3xl font-bold mb-4">
-              Ayurveda Shop
+              MED<span className="text-[#6B8E23]">TECH</span>
             </h3>
 
             <p className="text-lg mb-6 text-[#6D6A5F]">
@@ -50,17 +50,17 @@ export default function Footer() {
 
             <ul className="space-y-3 text-[#6D6A5F]">
               <li>
-                <Link href="/collections/hair-oil" className="hover:text-[#A6B11E] transition">
+                <Link href="/collections" className="hover:text-[#A6B11E] transition">
                   Hair Oil
                 </Link>
               </li>
               <li>
-                <Link href="/collections/hair-tablets" className="hover:text-[#A6B11E] transition">
+                <Link href="/collections" className="hover:text-[#A6B11E] transition">
                   Hair Tablets
                 </Link>
               </li>
               <li>
-                <Link href="/collections/hair-lepa" className="hover:text-[#A6B11E] transition">
+                <Link href="/collections" className="hover:text-[#A6B11E] transition">
                   Hair Lepa
                 </Link>
               </li>

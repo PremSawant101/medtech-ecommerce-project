@@ -152,7 +152,7 @@ export default function Home() {
         />
         <img
           src="/images/frontAmla.png"
-          className="amla amla-2 absolute w-62 z-99 -bottom-36 left-4/10 rotate-104"
+          className="amla amla-2 absolute w-62 z-40 -bottom-36 left-4/10 rotate-104"
         />
         <img
           src="/images/frontAmla.png"
@@ -181,7 +181,7 @@ export default function Home() {
         />
         <img
           src="/images/leaves/leaf3.png"
-          className="leaf leaf-4 absolute w-180 -bottom-180 -right-1/12 z-99"
+          className="leaf leaf-4 absolute w-180 -bottom-180 -right-1/12 z-40"
         />
       </section>
 

@@ -14,8 +14,9 @@ export default function CouponsPage() {
     const [discount, setDiscount] = useState("");
     const [expiry, setExpiry] = useState("");
     const [message, setMessage] = useState("");
+    const [editId, setEditId] = useState(null);
 
-
+    // ===== Auth Check =====
     useEffect(() => {
         if (status === "loading") return;
 
@@ -28,7 +29,7 @@ export default function CouponsPage() {
         }
     }, [session, status]);
 
-
+    // ===== Load Coupons =====
     const loadCoupons = async () => {
         const res = await fetch("/api/coupons");
         const data = await res.json();
@@ -39,13 +40,22 @@ export default function CouponsPage() {
         loadCoupons();
     }, []);
 
+    // ===== Add / Update Coupon =====
+    const saveCoupon = async () => {
 
-    const addCoupon = async () => {
-        const res = await fetch("/api/coupons", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+        if (!code || !discount || !expiry) {
+            setMessage("Please fill all fields");
+            return;
+        }
+
+        const method = editId ? "PUT" : "POST";
+        const url = editId
+            ? `/api/coupons/${editId}`
+            : "/api/coupons";
+
+        const res = await fetch(url, {
+            method,
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 email: session?.user?.email,
                 code,
@@ -61,13 +71,17 @@ export default function CouponsPage() {
             setCode("");
             setDiscount("");
             setExpiry("");
+            setEditId(null);
             loadCoupons();
         }
     };
 
-
+    // ===== Delete Coupon =====
     const deleteCoupon = async (id) => {
-        await fetch(`/api/coupons/${id}`, {
+        const confirmDelete = confirm("Delete this coupon?");
+        if (!confirmDelete) return;
+
+        const res = await fetch(`/api/coupons/${id}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -75,115 +89,138 @@ export default function CouponsPage() {
             }),
         });
 
-        loadCoupons();
+        if (res.ok) {
+            loadCoupons();
+        }
     };
-
-
-    const updateCoupon = async (id) => {
-        await fetch(`/api/coupons/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                email: session?.user?.email,
-                discountPercent: Number(discount),
-                expiryDate: expiry,
-            }),
-        });
-
-        loadCoupons();
-    };
-
 
     if (status === "loading") {
         return <p className="p-10 text-white">Loading...</p>;
     }
 
-
     return (
-        <div className="min-h-screen bg-[#100C08] text-[#FFFAF0] p-10">
+        <div className="min-h-screen bg-[#0F0F0F] text-white p-5">
 
-            <h1 className="text-3xl font-bold text-[#6B8E23] mb-10">
+            <h1 className="text-4xl font-bold text-[#6B8E23] mb-8">
                 Coupons Management
             </h1>
 
-            <div className="bg-[#FFFAF0] text-black p-6 rounded-2xl shadow-xl max-w-xl mb-10">
+            <div className="bg-[#1A1A1A] p-8 rounded-2xl shadow-xl max-w-xl mb-12 border border-[#222]">
 
-                <h2 className="text-xl font-semibold mb-4 text-[#6B8E23]">
-                    Create Coupon
+                <h2 className="text-2xl font-semibold mb-6 text-[#6B8E23]">
+                    {editId ? "Edit Coupon" : "Create Coupon"}
                 </h2>
 
                 <input
                     placeholder="Coupon Code (MED50)"
-                    className="w-full border p-3 rounded-lg mb-3"
+                    className="w-full mb-4 p-3 rounded-lg bg-[#111] border border-[#222]"
                     value={code}
-                    onChange={(e) => setCode(e.target.value)}
+                    onChange={(e) => setCode(e.target.value.toUpperCase())}
                 />
 
                 <input
                     type="number"
                     placeholder="Discount %"
-                    className="w-full border p-3 rounded-lg mb-3"
+                    className="w-full mb-4 p-3 rounded-lg bg-[#111] border border-[#222]"
                     value={discount}
                     onChange={(e) => setDiscount(e.target.value)}
                 />
 
                 <input
                     type="date"
-                    className="w-full border p-3 rounded-lg mb-4"
+                    className="w-full mb-6 p-3 rounded-lg bg-[#111] border border-[#222]"
                     value={expiry}
                     onChange={(e) => setExpiry(e.target.value)}
                 />
 
-                <button
-                    onClick={addCoupon}
-                    className="bg-[#6B8E23] text-white px-6 py-2 rounded-lg hover:bg-[#556B2F]"
-                >
-                    Add Coupon
-                </button>
+                <div className="flex gap-4">
+                    <button
+                        onClick={saveCoupon}
+                        className="bg-[#6B8E23] px-6 py-3 rounded-lg font-semibold hover:bg-[#556B2F] transition"
+                    >
+                        {editId ? "Update Coupon" : "Add Coupon"}
+                    </button>
+
+                    {editId && (
+                        <button
+                            onClick={() => {
+                                setEditId(null);
+                                setCode("");
+                                setDiscount("");
+                                setExpiry("");
+                            }}
+                            className="text-gray-400 underline"
+                        >
+                            Cancel Edit
+                        </button>
+                    )}
+                </div>
 
                 {message && (
-                    <p className="mt-4 text-green-600">{message}</p>
+                    <p className="mt-4 text-green-400">{message}</p>
                 )}
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* ===== COUPON LIST ===== */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                {coupons.map((c) => (
-                    <div
-                        key={c._id}
-                        className="bg-[#FFFAF0] text-black p-6 rounded-2xl shadow-lg"
-                    >
-                        <p className="font-bold text-lg">
-                            {c.code}
-                        </p>
+                {coupons.map((c) => {
+                    const isExpired = new Date(c.expiryDate) < new Date();
 
-                        <p className="text-gray-600">
-                            Discount: {c.discountPercent}%
-                        </p>
+                    return (
+                        <div
+                            key={c._id}
+                            className="bg-[#1A1A1A] p-6 rounded-2xl shadow-lg border border-[#222] hover:scale-[1.02] transition"
+                        >
 
-                        <p className="text-gray-600">
-                            Expiry: {new Date(c.expiryDate).toDateString()}
-                        </p>
+                            {/* Code + Status */}
+                            <div className="flex justify-between items-center mb-4">
+                                <p className="font-bold text-xl tracking-wider">
+                                    {c.code}
+                                </p>
 
-                        <div className="mt-4 flex gap-3">
+                                <span className={`text-xs px-3 py-1 rounded-full font-semibold ${isExpired
+                                    ? "bg-red-600 text-white"
+                                    : "bg-green-600 text-white"
+                                    }`}>
+                                    {isExpired ? "Expired" : "Active"}
+                                </span>
+                            </div>
 
-                            <button
-                                onClick={() => deleteCoupon(c._id)}
-                                className="bg-red-600 text-white px-4 py-2 rounded"
-                            >
-                                Delete
-                            </button>
+                            <p className="text-gray-400 mb-2">
+                                Discount: <span className="text-[#6B8E23] font-semibold">
+                                    {c.discountPercent}%
+                                </span>
+                            </p>
 
-                            <button
-                                onClick={() => updateCoupon(c._id)}
-                                className="bg-[#6B8E23] text-white px-4 py-2 rounded"
-                            >
-                                Update
-                            </button>
+                            <p className="text-gray-400 mb-6">
+                                Expiry: {new Date(c.expiryDate).toDateString()}
+                            </p>
+
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => {
+                                        setEditId(c._id);
+                                        setCode(c.code);
+                                        setDiscount(c.discountPercent);
+                                        setExpiry(c.expiryDate?.split("T")[0]);
+                                    }}
+                                    className="bg-[#6B8E23] px-4 py-2 rounded-lg text-sm hover:bg-[#556B2F]"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    onClick={() => deleteCoupon(c._id)}
+                                    className="bg-red-600 px-4 py-2 rounded-lg text-sm hover:bg-red-700"
+                                >
+                                    Delete
+                                </button>
+                            </div>
 
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
 
             </div>
 

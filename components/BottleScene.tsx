@@ -53,7 +53,7 @@ export default function BottleScene() {
   }, []);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-50">
+    <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-40">
       <Image
         ref={bottleRef}
         src="/images/amlaBottle.png"
