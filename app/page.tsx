@@ -83,7 +83,6 @@ export default function Home() {
 
   return (
     <main className={`bg-white ${lexend.className} overflow-hidden`}>
-
       <Navbar />
 
       <BottleScene />
@@ -98,32 +97,32 @@ export default function Home() {
         </h1>
       </section>
 
-<section
-  ref={amlaRef}
-  className="h-screen relative bg-linear-to-l from-[#FFFEFE26] to-[#DFE2D2] text-[#4E482E] flex items-center justify-start"
->
-  <h1 className="text-pretty md:text-[100px] lg:text-[140px] md:pl-20 lg:pl-40 font-light w-1/6 text-left text-5xl z-40">
-    Rooted in <span className="font-extrabold">Amla</span>
-  </h1>
+      <section
+        ref={amlaRef}
+        className="h-screen relative bg-linear-to-l from-[#FFFEFE26] to-[#DFE2D2] text-[#4E482E] flex items-center justify-start"
+      >
+        <h1 className="text-pretty md:text-[100px] lg:text-[140px] md:pl-20 lg:pl-40 font-light w-1/6 text-left text-5xl z-40">
+          Rooted in <span className="font-extrabold">Amla</span>
+        </h1>
 
-  <div className="bg-[url('/images/amla.png')] bg-center bg-no-repeat bg-contain amla absolute md:w-60 lg:w-80 aspect-square top-100 left-20 z-10"/>
+        <div className="bg-[url('/images/amla.png')] bg-center bg-no-repeat bg-contain amla absolute md:w-60 lg:w-80 aspect-square top-100 left-20 z-10" />
 
-  <div className="bg-[url('/images/amla.png')] bg-center bg-no-repeat bg-contain amla absolute md:w-40 lg:w-62 aspect-square bottom-10 -left-10 rotate-300 z-10"/>
+        <div className="bg-[url('/images/amla.png')] bg-center bg-no-repeat bg-contain amla absolute md:w-40 lg:w-62 aspect-square bottom-10 -left-10 rotate-300 z-10" />
 
-  <div className="bg-[url('/images/amla.png')] bg-center bg-no-repeat bg-contain amla absolute md:w-40 lg:w-66 aspect-square top-1/6 -right-20 rotate-320 z-10"/>
+        <div className="bg-[url('/images/amla.png')] bg-center bg-no-repeat bg-contain amla absolute md:w-40 lg:w-66 aspect-square top-1/6 -right-20 rotate-320 z-10" />
 
-  <div className="bg-[url('/images/amla.png')] bg-center bg-no-repeat bg-contain amla absolute md:w-40 lg:w-68 aspect-square bottom-10 right-3/12 rotate-120 z-10"/>
+        <div className="bg-[url('/images/amla.png')] bg-center bg-no-repeat bg-contain amla absolute md:w-40 lg:w-68 aspect-square bottom-10 right-3/12 rotate-120 z-10" />
 
-  {/* -- */}
+        {/* -- */}
 
-  <div className="bg-[url('/images/amla.png')] bg-center bg-no-repeat bg-contain amla absolute w-60 aspect-square top-3/10 left-3/14 rotate-18 z-10"/>
+        <div className="bg-[url('/images/amla.png')] bg-center bg-no-repeat bg-contain amla absolute w-60 aspect-square top-3/10 left-3/14 rotate-18 z-10" />
 
-  <div className="bg-[url('/images/frontAmla.png')] bg-center bg-no-repeat bg-contain amla absolute w-62 aspect-square -bottom-36 left-4/10 rotate-104 z-10"/>
+        <div className="bg-[url('/images/frontAmla.png')] bg-center bg-no-repeat bg-contain amla absolute w-62 aspect-square -bottom-36 left-4/10 rotate-104 z-10" />
 
-  <div className="bg-[url('/images/frontAmla.png')] bg-center bg-no-repeat bg-contain amla absolute w-66 aspect-square top-3/7 right-7/16 z-10"/>
+        <div className="bg-[url('/images/frontAmla.png')] bg-center bg-no-repeat bg-contain amla absolute w-66 aspect-square top-3/7 right-7/16 z-10" />
 
-  <div className="bg-[url('/images/frontAmla.png')] bg-center bg-no-repeat bg-contain amla absolute w-68 aspect-square -bottom-40 right-1/10 rotate-140 z-10"/>
-</section>
+        <div className="bg-[url('/images/frontAmla.png')] bg-center bg-no-repeat bg-contain amla absolute w-68 aspect-square -bottom-40 right-1/10 rotate-140 z-10" />
+      </section>
 
       <section
         ref={leavesRef}
@@ -147,7 +146,10 @@ export default function Home() {
       </section>
 
       <section className="h-screen bg-linear-to-l  from-[#FFFEFE26] to-[#DFE2D2] text-[#4E482E] font-lexend flex items-center justify-center">
-        <div id="ourStory" className="max-w-7xl p-14 flex justify-between items-center gap-75">
+        <div
+          id="ourStory"
+          className="max-w-7xl p-14 flex justify-between items-center gap-75"
+        >
           <Image
             src="/images/p1.png"
             alt="Bottle"
