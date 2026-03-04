@@ -11,74 +11,46 @@ gsap.registerPlugin(ScrollTrigger);
 export default function BottleScene() {
   const bottleRef = useRef<HTMLImageElement>(null);
 
-useGSAP(() => {
-  const bottle = bottleRef.current;
-  if (!bottle) return;
+  useGSAP(() => {
+    const bottle = bottleRef.current;
+    if (!bottle) return;
 
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: document.body,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+      },
+    });
 
-  gsap.set(bottle, {
-    transformOrigin: "50% 90%"
-  });
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: document.body,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: true,
-      invalidateOnRefresh: true
-    }
-  });
-
-  tl.fromTo(
-    bottle,
-    {
-      y: vh * 0.09,
-      x: vw * 0.05,
-      opacity: 1,
-      rotate: 82
-    },
-    {
-      y: vh * 0,
-      opacity: 1,
-      rotate: 45,
-      duration: 1,
-      scale: 1.35
-    }
-  )
-
-  .to(bottle, {
-    rotate: "-=90",
-    scale: 1.6,
-    y: vh * 0.40,
-    x: vw * 0.20,
-    duration: 1
-  })
-
-  .to(bottle, {
-    rotate: "-=45",
-    scale: 1.52,
-    y: vh * 0.06,
-    x: vw * 0.10,
-    duration: 1
-  })
-
-  .to(bottle, {
-    rotate: "-=100",
-    y: vh * -0.14,
-    x: vw * -0.08,
-    scale: 1.22,
-    duration: 1
-  });
-
-  const handleResize = () => ScrollTrigger.refresh();
-  window.addEventListener("resize", handleResize);
-
-  return () => window.removeEventListener("resize", handleResize);
-
-}, []);
+    tl.fromTo(
+      bottle,
+      { y: "9vh", x: "5vw", opacity: 1, rotate: 82 },
+      { y: "0vh", opacity: 1, rotate: 45, duration: 1, scale: 1.35 },
+    )
+      .to(bottle, {
+        rotate: "-=65",
+        scale: 2.4,
+        y: "40vh",
+        x: "20vw",
+        duration: 1,
+      })
+      .to(bottle, {
+        rotate: "-=45",
+        scale: 1.52,
+        y: "6vh",
+        x: "10vw",
+        duration: 1,
+      })
+      .to(bottle, {
+        rotate: "-=110",
+        y: "-40vh",
+        x: "-1vw",
+        scale: 1.22,
+        duration: 1,
+      });
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-40">
