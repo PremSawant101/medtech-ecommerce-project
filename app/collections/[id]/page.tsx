@@ -25,6 +25,14 @@ export default function ProductPage() {
     const amlaRef = useRef<HTMLDivElement>(null);
     const leavesRef = useRef<HTMLDivElement>(null);
 
+    const [toast, setToast] = useState<string | null>(null);
+
+    const showToast = (message: string) => {
+        setToast(message);
+        setTimeout(() => {
+            setToast(null);
+        }, 2500);
+    };
     const { id } = useParams();
     const { addToCart } = useCart();
     const { cart } = useCart();
@@ -97,7 +105,11 @@ export default function ProductPage() {
             className={`bg-[#F4F3EE] min-h-screen relative overflow-hidden ${lexend.className}`}
         >
             <Navbar />
-
+            {toast && (
+                <div className="fixed top-25 right-10 bg-[#4E482E] text-white px-6 py-3 rounded-xl shadow-2xl z-50 transition-all duration-300">
+                    {toast}
+                </div>
+            )}
             <section
                 ref={amlaRef}
                 className="relative h-screen flex items-center justify-center overflow-hidden"
@@ -126,20 +138,20 @@ export default function ProductPage() {
                     className="absolute -bottom-20 -left-20 rotate-45"
                 />
 
-                <div className="w-full max-w-350 flex flex-col lg:flex-row items-center justify-between z-10 pt-20 lg:pt-0">
+                <div className="w-full max-w-350 flex items-center justify-between z-10">
 
-                    <div className="relative max-w-6xl h-1/2 flex items-end justify-center w-full lg:w-1/2">
+                    <div className="relative max-w-6xl h-1/2 flex items-end justify-center w-1/2">
                         <Image
                             src={product.image}
                             alt={product.name}
                             width={1000}
                             height={1000}
-                            className="object-contain w-64 h-64 lg:w-180 lg:h-170"
+                            className="object-contain w-180 h-170"
                         />
                     </div>
 
-                    <div className="w-full lg:w-1/2 px-6 lg:px-0 lg:pl-20 mt-10 lg:mt-0 text-center lg:text-left text-[#4E482E]">
-                        <h1 className="text-4xl lg:text-6xl font-bold mb-4">
+                    <div className="w-1/2 pl-20 text-[#4E482E]">
+                        <h1 className="text-6xl font-bold mb-4">
                             {product.name}
                         </h1>
 
@@ -167,11 +179,13 @@ export default function ProductPage() {
                                 if (product.stock === 0) return;
 
                                 addToCart({
-                                    id: product._id,
+                                    _id: product._id,
                                     name: product.name,
                                     price: product.price,
                                     image: product.image,
                                 });
+
+                                showToast("Product added to cart 🛒");
                             }}
                         />
                     </div>

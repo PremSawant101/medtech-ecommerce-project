@@ -1,9 +1,10 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 type CartItem = {
-  id: string;
+  _id: string;
   name: string;
   price: number;
   image?: string;
@@ -12,52 +13,81 @@ type CartItem = {
 
 type CartContextType = {
   cart: CartItem[];
-  addToCart: (item: Omit<CartItem, "quantity">) => void;
-  removeFromCart: (id: string) => void;
-  clearCart: () => void;
+  addToCart: (item: Omit<CartItem, "quantity">) => Promise<void>;
+  removeFromCart: (id: string) => Promise<void>;
+  clearCart: () => Promise<void>;
 };
 
 const CartContext = createContext<CartContextType | null>(null);
 
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+export const CartProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const { data: session } = useSession();
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [isMounted, setIsMounted] = useState(false);
 
-   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
+  useEffect(() => {
+    if (!session?.user?.email) {
+      setCart([]);
+      return;
     }
-    setIsMounted(true);
-  }, []);
 
-   useEffect(() => {
-    if (isMounted) {
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
-  }, [cart, isMounted]);
+    fetch(`/api/cart?email=${session.user.email}`)
+      .then((res) => res.json())
+      .then((data) => setCart(data));
+  }, [session]);
 
-  const addToCart = (item: Omit<CartItem, "quantity">) => {
-    setCart((prev) => {
-      const existing = prev.find((p) => p.id === item.id);
+  const addToCart = async (item: Omit<CartItem, "quantity">) => {
+    if (!session?.user?.email) return;
 
-      if (existing) {
-        return prev.map((p) =>
-          p.id === item.id
-            ? { ...p, quantity: p.quantity + 1 }
-            : p
-        );
-      }
-
-      return [...prev, { ...item, quantity: 1 }];
+    await fetch("/api/cart", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: session.user.email,
+        item: { ...item, quantity: 1 },
+      }),
     });
+
+    const res = await fetch(
+      `/api/cart?email=${session.user.email}`
+    );
+    const data = await res.json();
+    setCart(data);
   };
 
-  const removeFromCart = (id: string) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+  const removeFromCart = async (id: string) => {
+    if (!session?.user?.email) return;
+
+    await fetch("/api/cart/remove", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: session.user.email,
+        productId: id,
+      }),
+    });
+
+    const res = await fetch(
+      `/api/cart?email=${session.user.email}`
+    );
+    const data = await res.json();
+    setCart(data);
   };
 
-  const clearCart = () => {
+  const clearCart = async () => {
+    if (!session?.user?.email) return;
+
+    await fetch("/api/cart", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: session.user.email,
+      }),
+    });
+
     setCart([]);
   };
 

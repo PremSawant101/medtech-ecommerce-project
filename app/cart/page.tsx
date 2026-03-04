@@ -11,7 +11,7 @@ export default function CartPage() {
 
   const increaseQty = (item: any) => {
     addToCart({
-      id: item.id,
+      _id: item.id,
       name: item.name,
       price: item.price,
       image: item.image,
@@ -28,7 +28,7 @@ export default function CartPage() {
       }
     }
   };
-
+  console.log(cart)
   return (
     <main className="bg-[#F4F3EE] min-h-screen">
       <Navbar />
@@ -44,10 +44,10 @@ export default function CartPage() {
           <>
             {cart.map((item) => (
               <div
-                key={item.id}
-                className="bg-white rounded-3xl shadow-md flex flex-col md:flex-row items-start md:items-center justify-between px-6 md:px-8 py-6 mb-6 gap-6 md:gap-0"
+                key={item._id}
+                className="bg-white rounded-3xl shadow-md flex items-center justify-between px-8 py-6 mb-6"
               >
-                <div className="flex items-center gap-4 md:gap-6">
+                <div className="flex items-center gap-6">
                   <Image
                     src={item.image || ""}
                     alt={item.name}
@@ -64,8 +64,7 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                {/* Quantity Controls (UI SAME STYLE) */}
-                <div className="flex flex-row md:flex-col items-center bg-[#A6B11E] rounded-2xl md:px-3 text-white self-end md:self-auto py-1 md:py-0 px-2 mt-4 md:mt-0">
+                <div className="flex flex-col items-center bg-[#A6B11E] rounded-2xl px-3 text-white">
                   <button
                     onClick={() => decreaseQty(item)}
                     className="text-2xl px-4"

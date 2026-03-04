@@ -68,6 +68,9 @@ export async function POST(req) {
 
 export async function GET() {
     await connectDB();
-    const orders = await Order.find();
+    const orders = await Order.find().populate({
+        path: "products.productId",
+        model: "Product",
+    });
     return Response.json(orders);
 }

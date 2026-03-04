@@ -26,6 +26,19 @@ export default function PaymentPage() {
   const [couponMessage, setCouponMessage] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   const [discount, setDiscount] = useState(0);
+  const [shippingData, setShippingData] = useState({
+    fullName: "",
+    address: "",
+    city: "",
+    country: "",
+    postalCode: "",
+  });
+  const isShippingValid =
+    shippingData.fullName.trim() !== "" &&
+    shippingData.address.trim() !== "" &&
+    shippingData.city.trim() !== "" &&
+    shippingData.country.trim() !== "" &&
+    /^[0-9]{6}$/.test(shippingData.postalCode);
 
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -36,6 +49,10 @@ export default function PaymentPage() {
     }
   }, [status]);
   const completePurchase = () => {
+    if (!isShippingValid) {
+      alert("Please fill all shipping details correctly");
+      return;
+    }
     setStep("summary");
   };
 
@@ -71,7 +88,7 @@ export default function PaymentPage() {
     if (success) {
 
       const orderProducts = cart.map(item => ({
-        productId: item.id,
+        productId: item._id,
         quantity: item.quantity,
       }));
 
@@ -94,6 +111,25 @@ export default function PaymentPage() {
 
   const total = subtotal + tax + shipping;
   const finalTotal = total - discount;
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + 3);
+
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() + 7);
+
+  const options = { day: "numeric", month: "short" };
+
+  const deliveryRange =
+    minDate.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+    }) +
+    " - " +
+    maxDate.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
   return (
     <main
       className={`relative min-h-screen flex items-center justify-center ${lexend.className}`}
@@ -133,19 +169,57 @@ export default function PaymentPage() {
             Shipping Information
           </h2>
 
-          {["Full Name", "Address", "City", "Country", "Postal Code"].map(
-            (field, i) => (
-              <input
-                key={i}
-                placeholder={field}
-                className="w-full mb-4 px-4 py-3 text-black rounded-md border border-gray-400 outline-none bg-white"
-              />
-            )
-          )}
+          <input
+            placeholder="Full Name"
+            value={shippingData.fullName}
+            onChange={(e) =>
+              setShippingData({ ...shippingData, fullName: e.target.value })
+            }
+            className="w-full mb-4 px-4 py-3 text-black rounded-md border border-gray-400 outline-none bg-white"
+          />
 
+          <input
+            placeholder="Address"
+            value={shippingData.address}
+            onChange={(e) =>
+              setShippingData({ ...shippingData, address: e.target.value })
+            }
+            className="w-full mb-4 px-4 py-3 text-black rounded-md border border-gray-400 outline-none bg-white"
+          />
+
+          <input
+            placeholder="City"
+            value={shippingData.city}
+            onChange={(e) =>
+              setShippingData({ ...shippingData, city: e.target.value })
+            }
+            className="w-full mb-4 px-4 py-3 text-black rounded-md border border-gray-400 outline-none bg-white"
+          />
+
+          <input
+            placeholder="Country"
+            value={shippingData.country}
+            onChange={(e) =>
+              setShippingData({ ...shippingData, country: e.target.value })
+            }
+            className="w-full mb-4 px-4 py-3 text-black rounded-md border border-gray-400 outline-none bg-white"
+          />
+
+          <input
+            placeholder="Postal Code"
+            value={shippingData.postalCode}
+            onChange={(e) =>
+              setShippingData({ ...shippingData, postalCode: e.target.value })
+            }
+            className="w-full mb-4 px-4 py-3 text-black rounded-md border border-gray-400 outline-none bg-white"
+          />
           <button
+            disabled={!isShippingValid}
             onClick={completePurchase}
-            className="w-full bg-black text-white py-4 rounded-md mt-6 hover:opacity-90 transition"
+            className={`w-full py-4 rounded-md mt-6 transition ${isShippingValid
+              ? "bg-black text-white hover:opacity-90"
+              : "bg-gray-400 text-white cursor-not-allowed"
+              }`}
           >
             Complete Purchase
           </button>
@@ -155,7 +229,7 @@ export default function PaymentPage() {
               Estimated Delivery
             </h3>
             <p>
-              Delivery by Saturday, 29 Oct 2026
+              Delivery between {deliveryRange}
             </p>
           </div>
         </Card>
@@ -185,8 +259,8 @@ export default function PaymentPage() {
           </div>
           {couponMessage && (
             <p className={`text-sm mt-2 ${couponMessage.includes("Applied")
-                ? "text-green-600"
-                : "text-red-500"
+              ? "text-green-600"
+              : "text-red-500"
               }`}>
               {couponMessage}
             </p>
@@ -281,11 +355,11 @@ export default function PaymentPage() {
           </h3>
 
           <p className="text-center mb-6">
-            Estimated Delivery by Saturday, 29 Oct 2026
+            Estimated Delivery between {deliveryRange}
           </p>
 
           <button
-            onClick={() => setStep("shipping")}
+            onClick={() => router.push("/collections")}
             className="w-full bg-black text-white py-4 rounded-md"
           >
             Shop More
@@ -326,7 +400,7 @@ export default function PaymentPage() {
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-11/12 sm:w-[450px] bg-[#F5F3EE] text-black rounded-xl shadow-xl p-6 sm:p-8 border border-gray-400">
+    <div className="w-[450px] bg-[#F5F3EE] text-black rounded-xl shadow-xl p-8 border border-gray-400">
       {children}
       <div className="text-right text-sm mt-8">
         © 2026 Ayurveda Shop

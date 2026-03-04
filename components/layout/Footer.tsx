@@ -22,13 +22,13 @@ export default function Footer() {
         <div className="absolute inset-0 bg-white/80 backdrop-blur-sm" />
       </div>
 
-      <div className="max-w-[1300px] mx-auto px-6 md:px-20 py-12 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-20">
+      <div className="max-w-[1300px] mx-auto px-20 py-20">
+        <div className="grid grid-cols-3 gap-20">
 
           {/* COLUMN 1 */}
           <div>
             <h3 className="text-3xl font-bold mb-4">
-              Ayurveda Shop
+              MED<span className="text-[#6B8E23]">TECH</span>
             </h3>
 
             <p className="text-lg mb-6 text-[#6D6A5F]">
@@ -50,17 +50,17 @@ export default function Footer() {
 
             <ul className="space-y-3 text-[#6D6A5F]">
               <li>
-                <Link href="/collections/hair-oil" className="hover:text-[#A6B11E] transition">
+                <Link href="/collections" className="hover:text-[#A6B11E] transition">
                   Hair Oil
                 </Link>
               </li>
               <li>
-                <Link href="/collections/hair-tablets" className="hover:text-[#A6B11E] transition">
+                <Link href="/collections" className="hover:text-[#A6B11E] transition">
                   Hair Tablets
                 </Link>
               </li>
               <li>
-                <Link href="/collections/hair-lepa" className="hover:text-[#A6B11E] transition">
+                <Link href="/collections" className="hover:text-[#A6B11E] transition">
                   Hair Lepa
                 </Link>
               </li>
@@ -105,7 +105,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Line */}
-        <div className="mt-10 md:mt-16 pt-6 md:pt-8 border-t border-[#4E482E]/30 text-center text-sm text-[#6D6A5F]">
+        <div className="mt-16 pt-8 border-t border-[#4E482E]/30 text-center text-sm text-[#6D6A5F]">
           © 2026 Ayurveda Shop. All Rights Reserved.
         </div>
       </div>
