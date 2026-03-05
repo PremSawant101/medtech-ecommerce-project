@@ -26,14 +26,14 @@ export default function BottleScene() {
 
     tl.fromTo(
       bottle,
-      { y: "9vh", x: "5vw", opacity: 1, rotate: 82 },
+      { y: "11vh", x: "5vw", opacity: 1, rotate: 82 },
       { y: "0vh", opacity: 1, rotate: 45, duration: 1, scale: 1.35 },
     )
       .to(bottle, {
         rotate: "-=65",
         scale: 2.4,
         y: "40vh",
-        x: "20vw",
+        x: "28vw",
         duration: 1,
       })
       .to(bottle, {
