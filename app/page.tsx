@@ -114,10 +114,10 @@ export default function Home() {
 
       <section
         ref={fadeBg}
-        className="h-screen bg-[url(/images/amlaBg.png)] pointer-events-none overflow-hidden bg-center bg-no-repeat bg-cover text-white flex items-center justify-center"
+        className="h-screen bg-[url(/images/amlaBg.png)] pointer-events-none overflow-hidden bg-center bg-no-repeat bg-cover text-white flex items-start lg:items-center justify-center"
       >
-        <div className="h-screen w-screen bg-black/20 "></div>
-        <h1 className="text-pretty text-[160px] leading-none font-extrabold w-1/6 absolute left-80 ">
+        <div className="h-screen w-screen bg-black/20 absolute inset-0"></div>
+        <h1 className="text-pretty text-8xl lg:text-[160px] leading-[1.5] lg:leading-none font-extrabold w-3/4 lg:w-1/6 absolute left-3 lg:left-80 top-20 lg:top-auto z-10">
           Nature's Answer To Hairfall
         </h1>
       </section>

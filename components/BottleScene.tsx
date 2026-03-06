@@ -24,32 +24,61 @@ export default function BottleScene() {
       },
     });
 
-    tl.fromTo(
-      bottle,
-      { y: 72, x: 50, opacity: 1, rotate: 82 },
-      { y: 0, opacity: 1, rotate: 45, duration: 1, scale: 1.5 },
-    )
-      .to(bottle, {
-        rotate: "-=80",
-        scale: 1.6,
-        yPercent: 40,
-        xPercent: 50,
-        duration: 1,
-      })
-      .to(bottle, {
-        rotate: "-=45",
-        scale: 1.7,
-        yPercent: 10,
-        xPercent: 25,
-        duration: 1,
-      })
-      .to(bottle, {
-        rotate: "-=100",
-        yPercent: "-40",
-        xPercent: "-14",
-        scale: 1.3,
-        duration: 1,
-      });
+    if (isMobile) {
+      tl.fromTo(
+        bottle,
+        { y: -20, x: 50, opacity: 1, rotate: 82 },
+        { y: -80, opacity: 1, rotate: 45, duration: 1, scale: 1.5 },
+      )
+        .to(bottle, {
+          rotate: "-=80",
+          scale: 1.6,
+          yPercent: 40,
+          xPercent: 50,
+          duration: 1,
+        })
+        .to(bottle, {
+          rotate: "-=45",
+          scale: 1.7,
+          yPercent: 10,
+          xPercent: 25,
+          duration: 1,
+        })
+        .to(bottle, {
+          rotate: 0,
+          yPercent: 10,
+          xPercent: -20,
+          scale: 1.4,
+          duration: 1,
+        });
+    } else {
+      tl.fromTo(
+        bottle,
+        { y: 72, x: 50, opacity: 1, rotate: 82 },
+        { y: 0, opacity: 1, rotate: 45, duration: 1, scale: 1.5 },
+      )
+        .to(bottle, {
+          rotate: "-=80",
+          scale: 1.6,
+          yPercent: 40,
+          xPercent: 50,
+          duration: 1,
+        })
+        .to(bottle, {
+          rotate: "-=45",
+          scale: 1.7,
+          yPercent: 10,
+          xPercent: 25,
+          duration: 1,
+        })
+        .to(bottle, {
+          rotate: "-=100",
+          yPercent: "-40",
+          xPercent: "-14",
+          scale: 1.3,
+          duration: 1,
+        });
+    }
   }, []);
 
   return (
