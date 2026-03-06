@@ -113,7 +113,7 @@ export default function ProductPage() {
             )}
             <section
                 ref={amlaRef}
-                className="relative min-h-screen lg:h-screen flex items-center justify-center overflow-hidden"
+                className="relative h-screen flex items-center justify-center overflow-hidden"
             >
                 <Image
                     src="/images/amla.png"
@@ -139,20 +139,27 @@ export default function ProductPage() {
                     className="absolute -bottom-20 -left-20 rotate-45"
                 />
 
-                <div className="w-full max-w-350 flex flex-col lg:flex-row items-center justify-between z-10 px-4 lg:px-0">
+                <div className="w-full max-w-350 flex items-center justify-between z-10">
 
-                    <div className="relative max-w-6xl h-1/2 flex items-end justify-center w-full lg:w-1/2">
+                    <div className="relative max-w-6xl h-1/2 flex items-end justify-center w-1/2">
+
+                        {product.discount > 0 && (
+                            <div className="absolute top-10 left-10 bg-[#A6B11E] text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
+                                -{product.discount}%
+                            </div>
+                        )}
                         <Image
                             src={product.image}
                             alt={product.name}
                             width={1000}
                             height={1000}
-                            className="object-contain w-60 h-60 lg:w-180 lg:h-170"
+                            className="object-contain w-180 h-170"
                         />
                     </div>
 
-                    <div className="w-full lg:w-1/2 pl-0 lg:pl-20 text-[#4E482E] mt-6 lg:mt-0">
-                        <h1 className="text-3xl lg:text-6xl font-bold mb-4">
+                    <div className="w-1/2 pl-24 text-[#4E482E]">
+
+                        <h1 className="text-6xl font-extrabold mb-6 tracking-tight leading-tight">
                             {product.name}
                         </h1>
 
