@@ -114,7 +114,7 @@ export default function Home() {
           ref={amlaRef}
           className="absolute inset-0 h-screen bg-linear-to-l from-[#FFFEFE26] to-[#DFE2D2] text-[#4E482E] flex items-center justify-start z-20 pointer-events-none"
         >
-          <h1 className="text-[#4E482E] text-balance text-5xl md:text-8xl lg:text-[130px] leading-[1.0] font-medium w-[90%] md:max-w-4xl absolute left-6 md:left-20 lg:left-32 top-16 md:top-24 lg:top-28 z-10 tracking-tight">
+          <h1 className="text-[#4E482E] text-balance text-[60px] md:text-8xl lg:text-[130px] leading-[1.0] font-medium w-[90%] md:max-w-4xl absolute left-6 md:left-20 lg:left-32 top-16 md:top-24 lg:top-28 z-10 tracking-tight">
             Rooted<br />in<br /><span className="font-extrabold text-[90px] md:text-[150px] leading-[0.8]">Amla</span>
           </h1>
           <img src="/images/amla.png" className="amla absolute w-28 lg:w-80 -top-10 left-10" />
@@ -129,17 +129,17 @@ export default function Home() {
           ref={leavesRef}
           className="absolute inset-0 h-screen bg-linear-to-l from-[#FFFEFE26] to-[#DFE2D2] text-[#4E482E] flex items-center justify-end z-30 pointer-events-none"
         >
-          <h1 className="text-[#4E482E] text-balance absolute text-5xl md:text-8xl lg:text-[130px] leading-[1.0] md:max-w-5xl text-right top-20 md:top-32 lg:top-40 right-10 md:right-32 lg:right-40 font-medium z-10 tracking-tight">
-            Calmed by<br /><span className="font-extrabold text-[60px] sm:text-[80px] md:text-[150px] leading-[0.8]">Ashwagandha</span>
+          <h1 className="text-[#4E482E] text-balance absolute text-[40px] md:text-8xl lg:text-[130px] leading-[1.0] md:max-w-5xl text-right top-60 md:top-32 lg:top-45 right-4 md:right-32 lg:right-40 font-medium z-10 tracking-tight">
+            Calmed by<br /><span className="font-extrabold  sm:text-[80px] md:text-[150px] leading-[0.8]">Ashwagandha</span>
           </h1>
           {/* Top Left Leaf */}
-          <img src="/images/leaves/leaf3.png" className="leaf absolute w-40 md:w-80 lg:w-[400px] -top-10 md:-top-20 -left-10 md:-left-20 rotate-180 z-0 opacity-90" />
+          <img src="/images/leaves/leaf3.png" className="leaf absolute w-40 md:w-80 lg:w-[400px] -top-10 md:-top-60 -left-10 md:-left-20 rotate-180 z-0 opacity-90" />
 
           {/* Bottom Left Leaf */}
-          <img src="/images/leaves/leaf1.png" className="leaf absolute w-50 md:w-100 lg:w-[450px] -bottom-10 md:-bottom-20 -left-10 md:-left-20 rotate-0 z-0 opacity-80" />
+          <img src="/images/leaves/leaf1.png" className="leaf absolute w-80 md:w-100 lg:w-[480px] -bottom-50 md:-bottom-80 -left-1/5 md:right-2/6 rotate-0 z-0 opacity-80" />
 
           {/* Bottom Right Leaf */}
-          <img src="/images/leaves/leaf3.png" className="leaf absolute w-40 md:w-80 lg:w-[350px] -bottom-10 md:-bottom-20 -right-10 md:-right-20 rotate-0 z-0 opacity-90" />
+          <img src="/images/leaves/leaf3.png" className="leaf absolute w-40 md:w-80 lg:w-[350px] top-20 md:-bottom-20 -right-20 md:-right-20 -rotate-90 z-0 opacity-90" />
         </section>
 
         {/* Our Story Section */}

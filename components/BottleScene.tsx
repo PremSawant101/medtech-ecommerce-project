@@ -78,10 +78,10 @@ export default function BottleScene() {
       )
         // Amla -> Leaves (Bottle tilts horizontally, centered/left)
         .to(bottle, {
-          rotate: "-70",
-          scale: 1.1,
-          yPercent: 35, // Moved further down
-          xPercent: "-20",
+          rotate: "-76",
+          scale: 1.8,
+          yPercent: 20, // Moved further down
+          xPercent: "-10",
           duration: 1,
         })
         // Leaves -> Story (Bottle scales massively, perfectly centered, showing top cap)
@@ -93,7 +93,7 @@ export default function BottleScene() {
           duration: 1,
         });
     }
-  }, []);
+  }, []); 
 
   return (
     <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-40">
