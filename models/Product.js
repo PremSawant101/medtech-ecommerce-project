@@ -15,6 +15,10 @@ const ProductSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        discount: {
+            type: Number,
+            default: 0
+        },
     },
     { timestamps: true }
 );
@@ -22,4 +26,3 @@ const ProductSchema = new mongoose.Schema(
 export default mongoose.models.Product ||
     mongoose.model("Product", ProductSchema);
 
-    

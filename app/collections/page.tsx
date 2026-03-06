@@ -20,6 +20,7 @@ type Product = {
   name: string;
   category: string;
   image?: string;
+  discount: number;
 };
 
 export default function CollectionsPage() {
@@ -114,6 +115,7 @@ export default function CollectionsPage() {
                 id={product._id}
                 image={product.image || "/images/oil/product1.png"}
                 title={product.name}
+                discount={product.discount}
               />
             ))}
           </div>
@@ -135,6 +137,7 @@ export default function CollectionsPage() {
                 id={product._id}
                 image={product.image || "/images/tablets/product1.png"}
                 title={product.name}
+                discount={product.discount}
               />
             ))}
           </div>
@@ -156,6 +159,7 @@ export default function CollectionsPage() {
                 id={product._id}
                 image={product.image || "/images/hairLepa/product1.png"}
                 title={product.name}
+                discount={product.discount}
               />
             ))}
           </div>
@@ -169,14 +173,23 @@ function ProductCard({
   id,
   image,
   title,
+  discount = 0,
 }: {
   id: string;
   image: string;
   title: string;
+  discount?: number;
 }) {
   return (
     <div className="group relative w-[280px] md:w-[360px] bg-white rounded-[28px] shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden">
-      <div className="flex items-center justify-center h-[320px] bg-[#F8F8F5]">
+      <div className="relative flex items-center justify-center h-[320px] bg-[#F8F8F5]">
+
+        {discount && discount > 0 && (
+          <div className="absolute top-4 left-4 bg-[#A6B11E] text-white text-xs px-3 py-1 rounded-full shadow-lg">
+            -{discount}%
+          </div>
+        )}
+
         <Image
           src={image}
           alt={title}

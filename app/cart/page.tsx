@@ -6,12 +6,13 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import Link from "next/link";
 
+
 export default function CartPage() {
   const { cart, addToCart, removeFromCart } = useCart();
 
   const increaseQty = (item: any) => {
     addToCart({
-      _id: item.id,
+      _id: item.productId,
       name: item.name,
       price: item.price,
       image: item.image,
@@ -19,16 +20,9 @@ export default function CartPage() {
   };
 
   const decreaseQty = (item: any) => {
-    if (item.quantity === 1) {
-      removeFromCart(item.id);
-    } else {
-      removeFromCart(item.id);
-      for (let i = 1; i < item.quantity; i++) {
-        addToCart(item);
-      }
-    }
+    removeFromCart(item.productId);
   };
-  console.log(cart)
+
   return (
     <main className="bg-[#F4F3EE] min-h-screen">
       <Navbar />

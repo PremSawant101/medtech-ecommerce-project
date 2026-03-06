@@ -89,10 +89,10 @@ export default function PaymentPage() {
 
       const orderProducts = cart.map(item => ({
         productId: item._id,
+        name: item.name,
+        price: item.price,
         quantity: item.quantity,
       }));
-
-
 
       clearCart();
       setStep("success");

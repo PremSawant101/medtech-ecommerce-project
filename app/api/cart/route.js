@@ -15,6 +15,7 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
+
     await connectDB();
 
     const { email, item } = await req.json();
@@ -22,20 +23,34 @@ export async function POST(req) {
     let cart = await Cart.findOne({ userEmail: email });
 
     if (!cart) {
+
         cart = await Cart.create({
             userEmail: email,
-            items: [item],
+            items: [{
+                productId: item._id,
+                name: item.name,
+                price: item.price,
+                image: item.image,
+                quantity: 1
+            }]
         });
+
     } else {
 
         const existingItem = cart.items.find(
-            (i) => i._id.toString() === item._id
+            (i) => i.productId === item._id
         );
 
         if (existingItem) {
             existingItem.quantity += 1;
         } else {
-            cart.items.push({ ...item, quantity: 1 });
+            cart.items.push({
+                productId: item._id,
+                name: item.name,
+                price: item.price,
+                image: item.image,
+                quantity: 1
+            });
         }
 
         await cart.save();

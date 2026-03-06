@@ -55,7 +55,8 @@ export async function PUT(req, context) {
                 price: Number(body.price),
                 image: body.image,
                 category: body.category,
-                stock: Number(body.stock), // 🔥 THIS LINE IS IMPORTANT
+                stock: Number(body.stock),
+                discount: Number(body.discount) || 0,
             },
             { new: true }
         );

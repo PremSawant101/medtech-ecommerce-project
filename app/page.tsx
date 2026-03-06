@@ -150,7 +150,7 @@ export default function Home() {
           <div id="ourStory" className="w-full max-w-[1400px] px-6 lg:px-14 flex flex-col md:flex-row justify-between items-end pb-24 mt-40 lg:mt-0 h-full relative z-10">
             <div className="w-full md:w-1/3 lg:w-[450px]">
               <p className="text-xl md:text-2xl lg:text-[26px] leading-[1.6] font-light text-justify text-[#4E482E] tracking-tight">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                Ayurveda is one of the best health science for illness to wellness.We are follower of this tradition to make people healthy.Ayurveda was created on two purposes one is to make healthy people more healthy by its Rasayan chikitsa (rejuvenation)2nd purpose to treat the diseases and make disease free society.
               </p>
             </div>
 
@@ -158,7 +158,8 @@ export default function Home() {
 
             <div className="w-full md:w-1/3 lg:w-[450px]">
               <p className="text-xl md:text-2xl lg:text-[26px] leading-[1.6] font-light text-justify text-[#4E482E] tracking-tight">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                So we are trying our best to fillfill among two purposes since 2011.
+                Our speciality in obesity, chronic skin disorders,Women’s disorders like Pcos,pcod,irregular or painful menstruation,hormonal imbalance.We are treating all above disorders successfully with authentic Ayurvedic medicine & classical Panchkarma.
               </p>
             </div>
           </div>

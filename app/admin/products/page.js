@@ -16,6 +16,7 @@ export default function ProductsPage() {
     const [stock, setStock] = useState("");
     const [editId, setEditId] = useState(null);
     const [message, setMessage] = useState("");
+    const [discount, setDiscount] = useState("");
 
     const loadProducts = async () => {
         const res = await fetch("/api/products");
@@ -35,6 +36,7 @@ export default function ProductsPage() {
         setCategory("");
         setDescription("");
         setStock("");
+        setDiscount("");
     };
 
     const addProduct = async () => {
@@ -48,6 +50,7 @@ export default function ProductsPage() {
                 description,
                 price: Number(price),
                 stock: Number(stock),
+                discount: Number(discount) || 0,
                 prescriptionRequired: false,
                 image,
             }),
@@ -69,6 +72,7 @@ export default function ProductsPage() {
                 image,
                 category,
                 stock: Number(stock),
+                discount: Number(discount) || 0,
             }),
         });
 
@@ -90,6 +94,7 @@ export default function ProductsPage() {
         setCategory(product.category);
         setDescription(product.description);
         setStock(product.stock);
+        setDiscount(product.discount || 0);
     };
     // ===== Filtering Logic =====
 
@@ -140,7 +145,13 @@ export default function ProductsPage() {
                         placeholder="Stock"
                         className="w-full mb-4 p-3 rounded-lg bg-[#111] border border-[#222]"
                     />
-
+                    <input
+                        type="number"
+                        value={discount}
+                        onChange={(e) => setDiscount(e.target.value)}
+                        placeholder="Discount (%)"
+                        className="w-full mb-4 p-3 rounded-lg bg-[#111] border border-[#222]"
+                    />
                     <input
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
@@ -214,44 +225,65 @@ export default function ProductsPage() {
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6 overflow-y-auto pr-2 flex-1">
-                        {filteredProducts.map((p) => (
-                            <div
-                                key={p._id}
-                                className="bg-[#1A1A1A] p-5 rounded-2xl shadow-lg hover:scale-[1.02] transition"
-                            >
-                                <img
-                                    src={p.image}
-                                    alt={p.name}
-                                    className="w-full h-40 object-cover rounded-lg mb-4"
-                                />
+                        {filteredProducts.map((p) => {
+                            console.log(p);
+                            return (
+                                <div
+                                    key={p._id}
+                                    className="relative bg-[#1A1A1A] p-5 rounded-2xl shadow-lg hover:scale-[1.02] transition"
+                                >
+                                    {p.discount > 0 && (
+                                        <div className="absolute top-3 left-3 bg-[#6B8E23] text-white text-xs px-2 py-1 rounded-full">
+                                            -{p.discount}%
+                                        </div>
+                                    )}
+                                    <img
+                                        src={p.image}
+                                        alt={p.name}
+                                        className="w-full h-40 object-cover rounded-lg mb-4"
+                                    />
 
-                                <h3 className="text-lg font-bold mb-2">{p.name}</h3>
+                                    <h3 className="text-lg font-bold mb-2">{p.name}</h3>
 
-                                <div className="flex justify-between items-center mb-3">
-                                    <span className="text-[#6B8E23] font-bold">
-                                        ₹{p.price}
-                                    </span>
+                                    <div className="flex justify-between items-center mb-3">
+                                        <div className="flex flex-col">
+                                            {p.discount > 0 ? (
+                                                <>
+                                                    <span className="text-gray-400 line-through text-sm">
+                                                        ₹{p.price}
+                                                    </span>
+                                                    <span className="text-[#6B8E23] font-bold">
+                                                        ₹{Math.round(p.price - (p.price * Number(p.discount)) / 100)}
+                                                    </span>
+                                                </>
+                                            ) : (
+                                                <span className="text-[#6B8E23] font-bold">
+                                                    ₹{p.price}
+                                                </span>
+                                            )}
+                                        </div>
 
-                                    <StockBadge stock={p.stock} />
+                                        <StockBadge stock={p.stock} />
+                                    </div>
+
+                                    <div className="flex gap-3">
+                                        <button
+                                            onClick={() => startEdit(p)}
+                                            className="bg-blue-600 px-4 py-2 rounded-md text-sm"
+                                        >
+                                            Edit
+                                        </button>
+
+                                        <button
+                                            onClick={() => handleDelete(p._id)}
+                                            className="bg-red-600 px-4 py-2 rounded-md text-sm"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
-
-                                <div className="flex gap-3">
-                                    <button
-                                        onClick={() => startEdit(p)}
-                                        className="bg-blue-600 px-4 py-2 rounded-md text-sm"
-                                    >
-                                        Edit
-                                    </button>
-
-                                    <button
-                                        onClick={() => handleDelete(p._id)}
-                                        className="bg-red-600 px-4 py-2 rounded-md text-sm"
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
+                            )
+                        })}
                     </div>
 
                 </div>

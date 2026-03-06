@@ -10,6 +10,8 @@ const OrderSchema = new mongoose.Schema(
                     type: mongoose.Schema.Types.ObjectId,
                     ref: "Product",
                 },
+                name: String,
+                price: Number,
                 quantity: Number,
             },
         ],
@@ -20,6 +22,7 @@ const OrderSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+
         prescriptionFile: {
             type: String,
             default: null,
