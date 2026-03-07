@@ -9,7 +9,7 @@ const lexend = Lexend({ subsets: ["latin"] });
 export default function Footer() {
   return (
     <section
-      className={`relative bg-linear-to-l  from-[#FFFEFE26] to-[#DFE2D2] text-[#4E482E] text-[#4E482E] ${lexend.className}`}
+      className={`relative bg-linear-to-l from-[#FFFEFE26] to-[#DFE2D2] text-[#4E482E] ${lexend.className}`}
     >
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -22,12 +22,14 @@ export default function Footer() {
         <div className="absolute inset-0 bg-white/80 backdrop-blur-sm" />
       </div>
 
-      <div className="max-w-[1300px] mx-auto px-20 py-20">
-        <div className="grid grid-cols-3 gap-20">
+      <div className="max-w-[1300px] mx-auto px-6 lg:px-20 py-12 lg:py-20">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-20">
 
           {/* COLUMN 1 */}
           <div>
-            <h3 className="text-3xl font-bold mb-4">
+
+            <h3 className="text-2xl lg:text-3xl font-bold mb-4">
               MED<span className="text-[#6B8E23]">TECH</span>
             </h3>
 
@@ -36,79 +38,97 @@ export default function Footer() {
             </p>
 
             <p className="text-[#6D6A5F] leading-relaxed">
-              123 Wellness Street<br />
-              Ahmedabad, Gujarat<br />
+              123 Wellness Street <br />
+              Ahmedabad, Gujarat <br />
               India - 380001
             </p>
+
           </div>
 
           {/* COLUMN 2 */}
           <div>
+
             <h4 className="text-xl font-semibold mb-6">
               Products
             </h4>
 
             <ul className="space-y-3 text-[#6D6A5F]">
+
               <li>
                 <Link href="/collections" className="hover:text-[#A6B11E] transition">
                   Hair Oil
                 </Link>
               </li>
+
               <li>
                 <Link href="/collections" className="hover:text-[#A6B11E] transition">
                   Hair Tablets
                 </Link>
               </li>
+
               <li>
                 <Link href="/collections" className="hover:text-[#A6B11E] transition">
                   Hair Lepa
                 </Link>
               </li>
+
             </ul>
+
           </div>
 
           {/* COLUMN 3 */}
           <div>
+
             <h4 className="text-xl font-semibold mb-6">
               Quick Links
             </h4>
 
             <ul className="space-y-3 text-[#6D6A5F]">
+
               <li>
                 <Link href="/" className="hover:text-[#A6B11E] transition">
                   Home
                 </Link>
               </li>
+
               <li>
                 <Link href="/collections" className="hover:text-[#A6B11E] transition">
                   Collections
                 </Link>
               </li>
+
               <li>
                 <Link href="/our-story" className="hover:text-[#A6B11E] transition">
                   Our Story
                 </Link>
               </li>
+
               <li>
                 <Link href="/education" className="hover:text-[#A6B11E] transition">
                   Education
                 </Link>
               </li>
+
               <li>
                 <Link href="/contact" className="hover:text-[#A6B11E] transition">
                   Contact
                 </Link>
               </li>
+
             </ul>
+
           </div>
 
         </div>
 
         {/* Bottom Line */}
+
         <div className="mt-16 pt-8 border-t border-[#4E482E]/30 text-center text-sm text-[#6D6A5F]">
-          © 2026 Ayurveda Shop. All Rights Reserved.
+          © 2026 MEDTECH. All Rights Reserved.
         </div>
+
       </div>
+
     </section>
   );
 }

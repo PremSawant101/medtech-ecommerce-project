@@ -3,7 +3,7 @@
 import Navbar from "@/components/layout/Navbar";
 import { Lexend } from "next/font/google";
 import Image from "next/image";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -22,6 +22,101 @@ type Product = {
   image?: string;
   discount: number;
 };
+
+/* ── Mobile Carousel ── */
+
+function MobileCarousel({
+  products,
+  defaultImage,
+}: {
+  products: Product[];
+  defaultImage: string;
+}) {
+  const [current, setCurrent] = useState(0);
+  const [isLandscape, setIsLandscape] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  useEffect(() => {
+    const check = () => setIsLandscape(window.innerWidth > window.innerHeight);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const perPage = isLandscape ? 2 : 1;
+  const maxIndex = Math.max(0, products.length - perPage);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && current < maxIndex) setCurrent((p) => p + 1);
+      if (diff < 0 && current > 0) setCurrent((p) => p - 1);
+    }
+  }, [current, maxIndex]);
+
+  const cardWidth = isLandscape ? 50 : 100;
+
+  return (
+    <div
+      className="w-full overflow-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div
+        className="flex transition-transform duration-300"
+        style={{ transform: `translateX(-${current * cardWidth}%)` }}
+      >
+        {products.map((product) => (
+          <div
+            key={product._id}
+            className="flex-shrink-0 px-3"
+            style={{ width: `${cardWidth}%` }}
+          >
+            <Link href={`/collections/${product._id}`}>
+              <div className="bg-white rounded-[40px] shadow-xl overflow-hidden flex flex-col items-center">
+                <div className="py-4">
+                  <Image
+                    src={product.image || defaultImage}
+                    alt={product.name}
+                    width={400}
+                    height={300}
+                    className="object-contain w-full h-44"
+                  />
+                </div>
+
+                <div className="bg-[#A6B11E] text-white text-center py-4 text-lg font-semibold w-full">
+                  {product.name}
+                </div>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex justify-center gap-2 mt-3">
+        {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`w-2.5 h-2.5 rounded-full ${i === current ? "bg-[#A6B11E]" : "bg-gray-300"
+              }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function CollectionsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -57,11 +152,9 @@ export default function CollectionsPage() {
   const hairOil = products.filter((p) =>
     p.category?.toLowerCase().includes("oil")
   );
-
   const hairTablets = products.filter((p) =>
     p.category?.toLowerCase().includes("tablet")
   );
-
   const hairLepa = products.filter((p) =>
     p.category?.toLowerCase().includes("lepa")
   );
@@ -74,7 +167,7 @@ export default function CollectionsPage() {
         ref={containerRef}
         className={`relative bg-[#F4F3EE] ${lexend.className}`}
       >
-        {/* FIXED BACKGROUND */}
+        {/* Background */}
         <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
           <Image
             src="/images/amla.png"
@@ -83,6 +176,7 @@ export default function CollectionsPage() {
             height={250}
             className="absolute -top-40 -left-20 blur-sm -rotate-45"
           />
+
           <Image
             src="/images/frontAmla.png"
             alt="Amla"
@@ -90,6 +184,7 @@ export default function CollectionsPage() {
             height={200}
             className="absolute -top-30 right-1/5 rotate-140"
           />
+
           <Image
             src="/images/leaves/leaf1.png"
             alt="Leaf"
@@ -99,16 +194,23 @@ export default function CollectionsPage() {
           />
         </div>
 
-        {/* ================= HAIR OIL ================= */}
-        <section className="collection-section min-h-screen flex flex-col items-center justify-center px-6 md:px-16">
+        {/* HAIR OIL */}
+        <section className="collection-section min-h-screen flex flex-col items-center justify-center pt-16 lg:pt-0 bg-[#F4F3EE]/85">
           <h1
-            className="text-[60px] md:text-[120px] font-extrabold text-transparent mt-28 tracking-wide text-center"
+            className="text-[64px] lg:text-[120px] font-extrabold text-transparent"
             style={{ WebkitTextStroke: "2px #A6B11E" }}
           >
             HAIR OIL
           </h1>
 
-          <div className="flex gap-20 flex-wrap justify-center">
+          <div className="w-full px-4 mt-4 lg:hidden">
+            <MobileCarousel
+              products={hairOil}
+              defaultImage="/images/oil/product1.png"
+            />
+          </div>
+
+          <div className="hidden lg:flex gap-8 mt-1">
             {hairOil.map((product) => (
               <ProductCard
                 key={product._id}
@@ -121,16 +223,23 @@ export default function CollectionsPage() {
           </div>
         </section>
 
-        {/* ================= HAIR TABLETS ================= */}
-        <section className="collection-section min-h-screen flex flex-col items-center justify-center px-6 md:px-16">
+        {/* TABLETS */}
+        <section className="collection-section min-h-screen flex flex-col items-center justify-center pt-16 lg:pt-0 bg-[#F4F3EE]/85">
           <h1
-            className="text-[60px] md:text-[120px] font-extrabold text-transparent mt-28 tracking-wide text-center"
+            className="text-[48px] lg:text-[120px] font-extrabold text-transparent"
             style={{ WebkitTextStroke: "2px #A6B11E" }}
           >
             HAIR TABLETS
           </h1>
 
-          <div className="flex gap-20 flex-wrap justify-center">
+          <div className="w-full px-4 mt-4 lg:hidden">
+            <MobileCarousel
+              products={hairTablets}
+              defaultImage="/images/tablets/product1.png"
+            />
+          </div>
+
+          <div className="hidden lg:flex gap-8 mt-1">
             {hairTablets.map((product) => (
               <ProductCard
                 key={product._id}
@@ -143,16 +252,23 @@ export default function CollectionsPage() {
           </div>
         </section>
 
-        {/* ================= HAIR LEPA ================= */}
-        <section className="collection-section min-h-screen flex flex-col items-center justify-center px-6 md:px-16">
+        {/* LEPA */}
+        <section className="collection-section min-h-screen flex flex-col items-center justify-center pt-16 lg:pt-0 bg-[#F4F3EE]/85">
           <h1
-            className="text-[60px] md:text-[120px] font-extrabold text-transparent mt-28 tracking-wide text-center"
+            className="text-[64px] lg:text-[120px] font-extrabold text-transparent"
             style={{ WebkitTextStroke: "2px #A6B11E" }}
           >
             HAIR LEPA
           </h1>
 
-          <div className="flex gap-20 flex-wrap justify-center mb-32">
+          <div className="w-full px-4 mt-4 lg:hidden">
+            <MobileCarousel
+              products={hairLepa}
+              defaultImage="/images/hairLepa/product1.png"
+            />
+          </div>
+
+          <div className="hidden lg:flex gap-8 mt-1">
             {hairLepa.map((product) => (
               <ProductCard
                 key={product._id}
@@ -183,8 +299,7 @@ function ProductCard({
   return (
     <div className="group relative w-[280px] md:w-[360px] bg-white rounded-[28px] shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden">
       <div className="relative flex items-center justify-center h-[320px] bg-[#F8F8F5]">
-
-        {discount && discount > 0 && (
+        {discount > 0 && (
           <div className="absolute top-4 left-4 bg-[#A6B11E] text-white text-xs px-3 py-1 rounded-full shadow-lg">
             -{discount}%
           </div>
@@ -200,14 +315,13 @@ function ProductCard({
       </div>
 
       <div className="p-6 flex flex-col items-center gap-4">
-        <h3 className="text-2xl font-semibold text-gray-800 tracking-wide text-center">
+        <h3 className="text-2xl font-semibold text-gray-800 text-center">
           {title}
         </h3>
 
         <Link href={`/collections/${id}`}>
-          <button className="relative px-8 py-3 text-sm font-semibold border-2 border-[#A6B11E] text-[#A6B11E] rounded-full overflow-hidden transition-all duration-400 hover:text-white group/button">
-            <span className="absolute inset-0 bg-[#A6B11E] scale-x-0 origin-left transition-transform duration-400 group-hover/button:scale-x-100"></span>
-            <span className="relative z-10">View Product</span>
+          <button className="px-8 py-3 text-sm font-semibold border-2 border-[#A6B11E] text-[#A6B11E] rounded-full hover:bg-[#A6B11E] hover:text-white transition">
+            View Product
           </button>
         </Link>
       </div>
