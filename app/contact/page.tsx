@@ -129,7 +129,7 @@ export default function InquirySection() {
             <iframe
               src="https://maps.google.com/maps?q=Anand%20Nagar%20Satellite%20Ahmedabad&t=&z=15&ie=UTF8&iwloc=&output=embed"
               className="w-full h-full border-0"
-              loading="lazy"
+              loading="lazy" 
             ></iframe>
 
           </div>
