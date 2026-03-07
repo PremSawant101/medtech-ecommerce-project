@@ -1,14 +1,11 @@
 "use client";
 
-import Navbar from "@/components/layout/Navbar";
-import AddedToCart from "@/components/AddedToCart";
 import { Lexend } from "next/font/google";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Button from "@/components/Button";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,20 +13,32 @@ const lexend = Lexend({
   subsets: ["latin"],
 });
 
-const Review = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const amlaRef = useRef<HTMLDivElement>(null);
-  const leavesRef = useRef<HTMLDivElement>(null);
+const reviews = [
+  {
+    name: "Ravina",
+    text: "Amla Hair Oil use karne ke baad hair fall noticeably kam hua. Texture light hai aur scalp par heavy feel nahi hota.",
+  },
+  {
+    name: "Heena",
+    text: "2 weeks se use kar rahi hu aur hair shine aur smoothness kaafi improve hua hai. Herbal smell bhi natural lagti hai.",
+  },
+  {
+    name: "Aarohi",
+    text: "Packaging aur product quality dono premium hai. Regular use se scalp health better feel hoti hai.",
+  },
+];
 
-  const [cart, setCart] = useState<{ [key: string]: number }>({});
+export default function Review() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const leavesRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      const amlaBg = amlaRef.current;
       const leavesBg = leavesRef.current;
-      if (!amlaBg || !leavesBg) return;
+      if (!leavesBg) return;
 
       const amlas = gsap.utils.toArray<HTMLImageElement>(".amla");
+
       amlas.forEach((amla) => {
         gsap.fromTo(
           amla,
@@ -38,16 +47,17 @@ const Review = () => {
             y: -200,
             ease: "none",
             scrollTrigger: {
-              trigger: amlaBg,
+              trigger: leavesBg,
               start: "top bottom",
               end: "bottom top",
               scrub: true,
             },
-          },
+          }
         );
       });
 
       const leaves = gsap.utils.toArray<HTMLImageElement>(".leaf");
+
       leaves.forEach((leaf) => {
         gsap.fromTo(
           leaf,
@@ -61,32 +71,37 @@ const Review = () => {
               end: "bottom top",
               scrub: true,
             },
-          },
+          }
         );
       });
     },
-    { scope: containerRef },
+    { scope: containerRef }
   );
+
   return (
     <section
       ref={leavesRef}
-      className="relative min-h-screen bg-[#F4F3EE] flex flex-col items-center justify-center py-40"
+      className={`relative min-h-screen bg-[#F4F3EE] flex flex-col items-center justify-center py-32 px-6 overflow-hidden ${lexend.className}`}
     >
+      {/* BIG TEXT */}
+
       <h1
-        className="absolute -bottom-50 text-[400px] font-extrabold text-transparent pointer-events-none select-none"
+        className="absolute bottom-[-120px] text-[120px] md:text-[220px] lg:text-[320px] font-extrabold text-transparent pointer-events-none select-none"
         style={{ WebkitTextStroke: "2px #A6B11E" }}
       >
         Reviews
       </h1>
 
+      {/* Decorations */}
+
       <img
         src="/images/amla.png"
-        className="amla absolute -top-10 left-1/2 -translate-x-1/2 blur-sm rotate-12 w-72"
+        className="amla absolute -top-10 left-1/2 -translate-x-1/2 blur-sm rotate-12 w-48 md:w-72"
       />
 
       <img
         src="/images/amla.png"
-        className="amla absolute -bottom-90 left-1/3 w-52 -rotate-22"
+        className="amla absolute -bottom-60 left-1/3 w-36 md:w-52 -rotate-12"
       />
 
       <Image
@@ -94,7 +109,7 @@ const Review = () => {
         alt="Leaf"
         width={250}
         height={250}
-        className="leaf absolute w-80 -left-40 top-20 rotate-102"
+        className="leaf absolute w-60 md:w-80 -left-20 md:-left-40 top-20 rotate-90"
       />
 
       <Image
@@ -102,31 +117,43 @@ const Review = () => {
         alt="Leaf"
         width={250}
         height={250}
-        className="leaf absolute w-80 -right-40 bottom-20 blur-xs"
+        className="leaf absolute w-60 md:w-80 -right-20 md:-right-40 bottom-20"
       />
 
-      <div className="flex gap-12 relative z-10">
-        {["Ravina", "Heena", "Ravina"].map((name, index) => (
-          <div
-            key={index}
-            className="w-95 bg-white rounded-[40px] shadow-xl overflow-hidden"
-          >
-            <div className="p-10 text-[#4E482E] leading-relaxed">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy
-              text ever since the 1500s, when an unknown printer took a galley
-              of type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, .
-            </div>
+      {/* Review Cards */}
 
-            <div className="bg-[#A6B11E] text-white text-center py-6 text-2xl font-semibold">
-              {name}
+      <div className="relative z-10 w-full max-w-6xl overflow-x-auto lg:overflow-visible">
+        <div className="flex gap-8">
+
+          {reviews.map((review, index) => (
+            <div
+              key={index}
+              className="
+              flex-shrink-0
+              w-full
+              sm:w-[48%]
+              lg:w-[32%]
+              bg-white
+              rounded-[32px]
+              shadow-xl
+              hover:shadow-2xl
+              transition
+              overflow-hidden
+              "
+            >
+              <div className="p-8 text-[#4E482E] leading-relaxed text-[15px]">
+                <span className="text-4xl text-[#A6B11E] font-bold">“</span>
+                {review.text}
+              </div>
+
+              <div className="bg-[#A6B11E] text-white text-center py-5 text-xl font-semibold">
+                {review.name}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+
+        </div>
       </div>
     </section>
-  )
+  );
 }
-
-export default Review
