@@ -110,7 +110,7 @@ export default function Home() {
           ref={fadeBg}
           className="absolute inset-0 h-screen bg-[url(/images/amlaBg.png)] bg-center bg-no-repeat bg-cover text-white flex items-start lg:items-center justify-start"
         >
-          <h1 className="text-balance text-[60px] md:text-8xl lg:text-[120px] leading-[1.1] font-extrabold w-full md:w-[24%] absolute left-4 md:left-20 lg:left-36 top-1/6 md:top-24 lg:top-22 z-20 tracking-tight">
+          <h1 className="text-balance text-[60px] md:text-8xl lg:text-[120px] leading-[1.1] font-extrabold w-[80vw] md:w-[24%] absolute left-4 md:left-20 lg:left-36 top-1/6 md:top-24 lg:top-22 z-20 tracking-tight">
             Nature&apos;s Answer to HairFall.
           </h1>
 
@@ -119,7 +119,7 @@ export default function Home() {
             alt="amla"
             width={300}
             height={300}
-            className=" absolute w-24 lg:w-68 -top-[7vh] -left-[5vw] rotate-[25deg] z-50"
+            className=" absolute w-24 lg:w-68 top-[1vh] lg:-top-[7vh] lg:-left-[5vw] rotate-[25deg] z-50"
           />
 
           <Image
@@ -143,7 +143,7 @@ export default function Home() {
             alt="amla"
             width={300}
             height={300}
-            className=" absolute w-24 lg:w-64 top-[8vh] left-[10vw] lg:top-[14vh] lg:left-[38vw] rotate-[100deg] z-50"
+            className=" absolute w-24 lg:w-64 top-[6vh] left-[10vw] lg:top-[14vh] lg:left-[38vw] rotate-[100deg] z-50"
           />
 
           <Image
@@ -151,7 +151,7 @@ export default function Home() {
             alt="amla"
             width={300}
             height={300}
-            className=" absolute w-24 lg:w-64 top-[30vh] right-[4vw] rotate-[140deg] z-50"
+            className=" absolute w-24 lg:w-64 top-[24vh] right-[4vw] rotate-[140deg] z-50"
           />
 
           <Image

@@ -41,7 +41,7 @@ export default function BottleScene() {
       // Intro -> Amla
       tl.fromTo(
         bottle,
-        { yPercent: 50, xPercent: 0, opacity: 1, rotate: 0, scale: 2.4 },
+        { yPercent: 50, xPercent: 0, opacity: 1, rotate: 0, scale: 2.2 },
         {
           yPercent: 30,
           xPercent: 10,
