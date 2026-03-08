@@ -110,7 +110,7 @@ export default function Home() {
           ref={fadeBg}
           className="absolute inset-0 h-screen bg-[url(/images/amlaBg.png)] bg-center bg-no-repeat bg-cover text-white flex items-start lg:items-center justify-start"
         >
-          <h1 className="text-balance text-[60px] md:text-8xl lg:text-[140px] leading-[1.1] font-extrabold w-full md:w-[24%] absolute left-4 md:left-20 lg:left-32 top-1/6 md:top-24 lg:top-28 z-20 tracking-tight">
+          <h1 className="text-balance text-[60px] md:text-8xl lg:text-[135px] leading-[1.1] font-extrabold w-full md:w-[24%] absolute left-4 md:left-20 lg:left-32 top-1/6 md:top-24 lg:top-22 z-20 tracking-tight">
             Nature&apos;s Answer to HairFall.
           </h1>
 
@@ -127,7 +127,7 @@ export default function Home() {
             alt="amla"
             width={300}
             height={300}
-            className=" absolute w-20 lg:w-60 bottom-[17vh] -left-[2vw] rotate-[310deg] z-50"
+            className=" absolute w-20 lg:w-60 bottom-[10vh] -left-[2vw] rotate-[310deg] z-50"
           />
 
           <Image
@@ -135,7 +135,7 @@ export default function Home() {
             alt="amla"
             width={300}
             height={300}
-            className=" absolute w-24 lg:w-50 top-[65vh] right-[62vw] rotate-[40deg] z-50"
+            className=" absolute w-24 lg:w-50 top-[70vh] right-[62vw] rotate-[40deg] z-50"
           />
 
           <Image
@@ -167,7 +167,7 @@ export default function Home() {
             alt="amla"
             width={300}
             height={300}
-            className=" absolute w-24 lg:w-72 bottom-[6vh] right-[10vw] rotate-[210deg] z-50"
+            className=" absolute w-24 lg:w-72 -bottom-[1vh] right-[10vw] rotate-[210deg] z-50"
           />
         </section>
 
@@ -176,12 +176,12 @@ export default function Home() {
           ref={amlaRef}
           className="absolute inset-0 h-screen bg-linear-to-l from-[#FFFEFE26] to-[#DFE2D2] text-[#4E482E] flex items-center justify-start z-20 pointer-events-none"
         >
-          <h1 className="text-[#4E482E] text-balance text-[60px] md:text-8xl lg:text-[130px] leading-[1.0] font-medium w-[90%] md:max-w-4xl absolute left-6 md:left-20 lg:left-32 top-16 md:top-24 lg:top-28 z-10 tracking-tight">
+          <h1 className="text-[#4E482E] text-balance text-[60px] md:text-8xl lg:text-[100px] leading-[1.0] font-medium w-[90%] md:max-w-4xl absolute left-6 md:left-20 lg:left-32 top-16 md:top-24 lg:top-28 z-10 tracking-tight">
             Rooted
             <br />
             in
             <br />
-            <span className="font-extrabold text-[90px] md:text-[150px] leading-[0.8]">
+            <span className="font-extrabold text-[60px] md:text-[100px] leading-[0.8]">
               Amla
             </span>
           </h1>
