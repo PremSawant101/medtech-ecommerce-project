@@ -143,7 +143,7 @@ export default function Home() {
             alt="amla"
             width={300}
             height={300}
-            className=" absolute w-24 lg:w-64 top-[8vh] left-[10vw] md:top-[12vh] md:right-[54vw] rotate-[100deg] z-50"
+            className=" absolute w-24 lg:w-64 top-[8vh] left-[10vw] lg:top-[14vh] lg:left-[38vw] rotate-[100deg] z-50"
           />
 
           <Image
@@ -228,7 +228,7 @@ export default function Home() {
           {/* Bottom Left Leaf */}
           <img
             src="/images/leaves/leaf1.png"
-            className="leaf absolute w-80 md:w-100 lg:w-[540px] -bottom-50 md:-bottom-80 -left-1/5 md:left-2/12 rotate-0 z-0 opacity-80 xl:-bottom-100"
+            className="leaf absolute w-80 md:w-100 lg:w-[540px] -bottom-50 md:-bottom-80 -left-1/5 md:left-1/12 rotate-0 z-0 opacity-80 xl:-bottom-100"
           />
 
           {/* Bottom Right Leaf */}
