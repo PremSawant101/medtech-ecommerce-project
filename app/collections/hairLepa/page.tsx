@@ -136,7 +136,7 @@ export default function ProductPage() {
 
           {/* RIGHT SIDE CONTENT */}
           <div className="w-1/2 pl-20 text-[#4E482E]">
-            <h1 className="text-6xl font-bold mb-4">Hair Lepa</h1>
+            <h1 className="text-4xl font-bold mb-4 leading-snug">Hair Lepa</h1>
 
             <h3 className="text-xl font-semibold mb-6">
               Lorem Ipsum is simply dummy
