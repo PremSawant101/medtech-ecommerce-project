@@ -38,3 +38,12 @@ body {
 .animate-spin {
   animation: slowSpin 1.8s linear infinite;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

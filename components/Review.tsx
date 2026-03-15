@@ -81,13 +81,13 @@ export default function Review() {
   return (
     <section
       ref={leavesRef}
-      className={`relative min-h-screen bg-[#F4F3EE] flex flex-col items-center justify-center py-32 px-6 overflow-hidden ${lexend.className}`}
+      className={`relative bg-[#F4F3EE] flex flex-col items-center justify-center py-12 lg:py-20 px-4 lg:px-6 pb-8 lg:pb-12 overflow-hidden ${lexend.className}`}
     >
       {/* BIG TEXT */}
 
       <h1
-        className="absolute bottom-[-120px] text-[120px] md:text-[220px] lg:text-[320px] font-extrabold text-transparent pointer-events-none select-none"
-        style={{ WebkitTextStroke: "2px #A6B11E" }}
+        className="mt-6 lg:mt-10 text-[40px] md:text-[90px] lg:text-[140px] font-extrabold text-[#4E482E] pointer-events-none select-none whitespace-nowrap z-[5] relative"
+        style={{ letterSpacing: "0.04em" }}
       >
         Reviews
       </h1>
@@ -122,31 +122,30 @@ export default function Review() {
 
       {/* Review Cards */}
 
-      <div className="relative z-10 w-full max-w-6xl overflow-x-auto lg:overflow-visible">
-        <div className="flex gap-8">
+      <div className="relative z-10 w-full max-w-6xl">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
 
           {reviews.map((review, index) => (
             <div
               key={index}
               className="
-              flex-shrink-0
               w-full
-              sm:w-[48%]
               lg:w-[32%]
               bg-white
-              rounded-[32px]
+              rounded-[20px]
+              lg:rounded-[32px]
               shadow-xl
               hover:shadow-2xl
               transition
               overflow-hidden
               "
             >
-              <div className="p-8 text-[#4E482E] leading-relaxed text-[15px]">
-                <span className="text-4xl text-[#A6B11E] font-bold">“</span>
+              <div className="p-5 lg:p-8 text-[#4E482E] leading-relaxed text-[13px] lg:text-[15px]">
+                <span className="text-2xl lg:text-4xl text-[#A6B11E] font-bold">“</span>
                 {review.text}
               </div>
 
-              <div className="bg-[#A6B11E] text-white text-center py-5 text-xl font-semibold">
+              <div className="bg-[#A6B11E] text-white text-center py-3 lg:py-5 text-base lg:text-xl font-semibold">
                 {review.name}
               </div>
             </div>

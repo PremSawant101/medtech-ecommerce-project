@@ -6,6 +6,7 @@ import { Lexend } from "next/font/google";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -41,6 +42,7 @@ export default function ProductPage() {
         console.log("Cart Updated:", cart);
     }, [cart]);
     const [product, setProduct] = useState<any>(null);
+    const [allProducts, setAllProducts] = useState<any[]>([]);
 
     useEffect(() => {
         if (!id) return;
@@ -49,6 +51,14 @@ export default function ProductPage() {
             .then((res) => res.json())
             .then((data) => setProduct(data));
     }, [id]);
+
+    useEffect(() => {
+        fetch("/api/products")
+            .then((res) => res.json())
+            .then((data) => setAllProducts(data));
+    }, []);
+
+    const similarProducts = allProducts.filter((p) => p._id !== id);
 
     useGSAP(
         () => {
@@ -135,7 +145,7 @@ export default function ProductPage() {
                     alt="Leaf"
                     width={250}
                     height={250}
-                    className="absolute -bottom-20 -left-20 rotate-45"
+                    className="absolute -bottom-20 -left-20 rotate-45 blur-md lg:blur-none"
                 />
 
                 <div className="w-full max-w-350 flex flex-col lg:flex-row items-center justify-between z-10 px-4 lg:px-0">
@@ -151,13 +161,14 @@ export default function ProductPage() {
                     </div>
 
                     <div className="w-full lg:w-1/2 pl-0 lg:pl-20 text-[#4E482E] mt-6 lg:mt-0">
-                        <h1 className="text-3xl lg:text-6xl font-bold mb-4">
+                        <h1 className="text-2xl lg:text-4xl font-bold mb-4 leading-snug">
                             {product.name}
                         </h1>
 
-                        <h3 className="text-xl font-semibold mb-6">
-                            ₹ {product.price}
-                        </h3>
+                        <div className="flex items-baseline gap-1 mb-6">
+                            <span className="text-sm font-medium text-[#A6B11E] tracking-wide">₹</span>
+                            <span className="text-3xl font-bold text-[#4E482E] tracking-tight">{product.price}</span>
+                        </div>
                         {product.stock === 0 ? (
                             <p className="text-red-600 font-semibold text-lg mb-4">
                                 Out of Stock
@@ -193,6 +204,48 @@ export default function ProductPage() {
             </section>
 
             <Review />
+
+            {/* Similar Products */}
+            {similarProducts.length > 0 && (
+                <section className="relative bg-[#F4F3EE] py-12 lg:py-20 px-4 lg:px-12">
+                    <h2 className="text-2xl lg:text-4xl font-bold text-[#4E482E] mb-8 px-2">
+                        Similar Products
+                    </h2>
+
+                    <div className="overflow-x-auto pb-4 scrollbar-hide">
+                        <div className="flex gap-4 lg:gap-6 w-max px-2">
+                            {similarProducts.map((item) => (
+                                <Link key={item._id} href={`/collections/${item._id}`}>
+                                    <div className="w-[160px] lg:w-[220px] bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex-shrink-0 group">
+                                        <div className="relative h-[140px] lg:h-[180px] bg-[#F8F8F5] flex items-center justify-center">
+                                            {/* Category Label */}
+                                            <div className="absolute top-2 left-2 lg:top-3 lg:left-3 bg-[#8B1A1A] text-white text-[7px] lg:text-[10px] font-bold uppercase px-2 lg:px-3 py-0.5 lg:py-1 rounded-sm z-10 tracking-wide">
+                                                {item.category?.toLowerCase().includes("oil") ? "HAIR OIL" : item.category?.toLowerCase().includes("tablet") ? "HAIR TABLETS" : item.category?.toLowerCase().includes("lepa") ? "HAIR LEPA" : item.category}
+                                            </div>
+                                            <Image
+                                                src={item.image || "/images/oil/product1.png"}
+                                                alt={item.name}
+                                                width={300}
+                                                height={300}
+                                                className="object-contain h-[110px] lg:h-[150px] transition-transform duration-500 group-hover:scale-105"
+                                            />
+                                        </div>
+                                        <div className="p-3 lg:p-4">
+                                            <h3 className="text-xs lg:text-sm font-semibold text-[#4E482E] line-clamp-2 mb-1">
+                                                {item.name}
+                                            </h3>
+                                            <div className="flex items-baseline gap-0.5">
+                                                <span className="text-[10px] lg:text-xs text-[#A6B11E] font-medium">₹</span>
+                                                <span className="text-sm lg:text-base font-bold text-[#4E482E]">{item.price}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
         </main>
     );
 }
